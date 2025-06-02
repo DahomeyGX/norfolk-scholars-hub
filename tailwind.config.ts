@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,7 +62,34 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+				// Prep color palette
+				'prep-burgundy': '#992135',
+				'prep-black': '#000000',
+				'prep-dark-gray': '#5c5c5c',
+				'prep-white': '#ffffff',
+				'pumpkin': '#d8965f',
+				'khaki': '#b4a365',
+				'slate-blue': '#6d87a8',
+				'purple': '#493d63',
+				'dark-tan': '#d2b681',
+				'light-tan': '#f6ecdc',
+				'warm-gray-light': '#d9d3cd',
+				'warm-gray-dark': '#99897c',
+				'lilac-purple': '#575897',
+				'dark-silver': '#5c5c5c'
+			},
+			fontFamily: {
+				'gill-sans': ['Gill Sans', 'Gill Sans MT', 'Trebuchet MS', 'sans-serif'],
+				'garamond': ['Garamond', 'Times New Roman', 'serif'],
+			},
+			fontSize: {
+				'prep-heading': ['24px', '1.2'],
+				'prep-subheading-gill': ['14px', '1.4'],
+				'prep-subheading-garamond': ['18px', '1.4'],
+				'prep-body-gill': ['12px', '1.6'],
+				'prep-body-garamond': ['14px', '1.6'],
+				'prep-social-heading': ['72px', '1.1'],
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
