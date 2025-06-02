@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -111,6 +112,7 @@ const Contact = () => {
                 <Button 
                   onClick={addContact}
                   size="sm"
+                  variant="outline"
                 >
                   <Plus className="h-4 w-4 mr-2" />
                   Add Contact
@@ -192,7 +194,7 @@ const Contact = () => {
                 </div>
               ))}
               
-              <Button className="w-full">
+              <Button variant="outline" className="w-full">
                 Save Contact Information
               </Button>
             </CardContent>

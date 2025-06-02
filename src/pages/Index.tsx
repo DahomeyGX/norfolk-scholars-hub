@@ -84,7 +84,7 @@ const Index = () => {
 
             {/* Call to Action Buttons */}
             <div className="flex flex-col md:flex-row gap-4 justify-center">
-              <Button asChild className="px-8 py-4 text-lg font-gill-sans text-prep-subheading-gill rounded-none">
+              <Button variant="outline" asChild className="px-8 py-4 text-lg font-gill-sans text-prep-subheading-gill rounded-none">
                 <Link to="/contact">GET STARTED</Link>
               </Button>
               <Button variant="outline" asChild className="px-8 py-4 text-lg font-gill-sans text-prep-subheading-gill rounded-none">

@@ -153,7 +153,7 @@ const Schedule = () => {
                   className="border-warm-gray-light rounded-none"
                 />
               </div>
-              <Button className="w-full rounded-none">
+              <Button variant="outline" className="w-full rounded-none">
                 UPDATE DAILY SCHEDULE
               </Button>
             </CardContent>
@@ -184,7 +184,7 @@ const Schedule = () => {
                   onChange={(e) => setYearlySchedule(e.target.value)}
                   className="border-warm-gray-light min-h-[200px] rounded-none"
                 />
-                <Button className="w-full mt-4 rounded-none">
+                <Button variant="outline" className="w-full mt-4 rounded-none">
                   UPDATE YEARLY SCHEDULE
                 </Button>
               </div>
