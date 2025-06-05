@@ -89,6 +89,9 @@ const Index = () => {
               <Link to="/schedule" className="text-prep-dark-gray text-prep-subheading-gill hover:text-prep-burgundy transition-colors">
                 SCHEDULE
               </Link>
+              <Link to="/apply" className="text-prep-dark-gray text-prep-subheading-gill hover:text-prep-burgundy transition-colors">
+                APPLY NOW
+              </Link>
               <Link to="/contact" className="text-prep-dark-gray text-prep-subheading-gill hover:text-prep-burgundy transition-colors">
                 CONTACT
               </Link>
@@ -215,7 +218,7 @@ const Index = () => {
               WHAT WE DO
             </h2>
             <p className="text-xl text-prep-dark-gray max-w-3xl mx-auto font-garamond text-prep-subheading-garamond">
-              Comprehensive academic support designed to help students excel in mathematics and English
+              Students Advocating for Young Children (SAYC) is a free enrichment program for rising 5th grade public school students of color from low- to moderate-income families. Led by Prep for Prep high school volunteers, SAYC offers engaging learning in ELA and Math!
             </p>
           </div>
           
@@ -276,7 +279,7 @@ const Index = () => {
           <div className="bg-light-tan p-8 md:p-12 shadow-lg">
             <div className="prose prose-lg mx-auto text-prep-dark-gray">
               <p className="text-lg leading-relaxed mb-6 font-garamond text-prep-subheading-garamond">
-                SAYC (Students Advocating for Young Children) was born from a simple belief: every child deserves access to quality education, regardless of their family's financial circumstances. Located in the heart of the Lower East Side at 111 Norfolk Street, our program has been serving the community with free tutoring services.
+                SAYC (Students Advocating for Young Children) was born from a simple belief: every child deserves access to quality education, regardless of their family's financial circumstances. Located in the heart of the Lower East Side at 111 Norfolk Street, our program has been serving students of color from low- to moderate-income families with free enrichment services.
               </p>
               <p className="text-lg leading-relaxed mb-6 font-garamond text-prep-subheading-garamond">
                 Our dedicated volunteers, many of whom are students themselves, understand the challenges young learners face. We've created a warm, welcoming environment where children can thrive academically while building lasting friendships and confidence.
