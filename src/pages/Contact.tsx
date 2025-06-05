@@ -256,7 +256,7 @@ const Contact = () => {
                 <p className="text-prep-dark-gray font-garamond text-prep-body-garamond">Stop by during program hours to see our tutoring sessions in action</p>
               </div>
             </div>
-          </div>
+          </CardContent>
         </Card>
       </div>
     </div>
