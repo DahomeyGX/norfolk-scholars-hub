@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { BookOpen, Phone, Mail, MapPin, Plus, Trash2 } from "lucide-react";
+import { BookOpen, Phone, Mail, MapPin, Plus, Trash2, Menu } from "lucide-react";
 
 interface ContactPerson {
   id: string;
@@ -48,56 +48,81 @@ const Contact = () => {
   };
 
   return (
-    <div className="min-h-screen bg-light-tan font-gill-sans">
-      {/* Navigation */}
-      <nav className="bg-prep-burgundy text-prep-white shadow-lg">
-        <div className="max-w-6xl mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <BookOpen className="h-8 w-8" />
-              <span className="text-2xl font-bold font-gill-sans">SAYC</span>
+    <div className="min-h-screen bg-prep-white font-gill-sans">
+      {/* Sticky Navigation Header - matching other pages */}
+      <nav className="fixed top-0 left-0 right-0 bg-prep-white shadow-md z-50 border-b border-warm-gray-light">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex items-center justify-between h-20">
+            {/* Logo Section */}
+            <div className="flex items-center space-x-3">
+              <BookOpen className="h-8 w-8 text-prep-burgundy" />
+              <div className="flex flex-col">
+                <span className="text-2xl font-bold text-prep-burgundy font-gill-sans tracking-tight">SAYC</span>
+                <span className="text-xs text-prep-dark-gray font-gill-sans">Students Advocating for Young Children</span>
+              </div>
             </div>
-            <div className="hidden md:flex space-x-6">
-              <Link to="/" className="hover:text-pumpkin transition-colors text-prep-subheading-gill">Home</Link>
-              <Link to="/schedule" className="hover:text-pumpkin transition-colors text-prep-subheading-gill">Schedule</Link>
-              <Link to="/contact" className="hover:text-pumpkin transition-colors text-pumpkin text-prep-subheading-gill">Contact</Link>
+
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center space-x-8">
+              <Link to="/" className="text-prep-dark-gray text-prep-subheading-gill hover:text-prep-burgundy transition-colors">
+                HOME
+              </Link>
+              <Link to="/schedule" className="text-prep-dark-gray text-prep-subheading-gill hover:text-prep-burgundy transition-colors">
+                SCHEDULE
+              </Link>
+              <Link to="/contact" className="text-prep-burgundy font-semibold text-prep-subheading-gill hover:text-pumpkin transition-colors border-b-2 border-prep-burgundy">
+                CONTACT
+              </Link>
+            </div>
+
+            {/* Mobile Menu Button */}
+            <div className="md:hidden">
+              <Menu className="h-6 w-6 text-prep-burgundy" />
             </div>
           </div>
         </div>
       </nav>
 
-      <div className="max-w-6xl mx-auto px-4 py-12">
-        <h1 className="text-4xl font-bold text-prep-burgundy text-center mb-12 font-gill-sans text-prep-heading">Contact Information</h1>
+      <div className="pt-20 max-w-6xl mx-auto px-6 py-12">
+        {/* Page Header */}
+        <div className="text-center mb-16">
+          <h1 className="text-4xl md:text-5xl font-bold text-prep-burgundy mb-6 font-gill-sans text-prep-heading">
+            CONTACT INFORMATION
+          </h1>
+          <p className="text-xl text-prep-dark-gray max-w-3xl mx-auto font-garamond text-prep-subheading-garamond">
+            Get in touch with our program coordinators and learn how to get involved
+          </p>
+        </div>
         
         <div className="grid lg:grid-cols-2 gap-8">
           {/* Program Information */}
-          <Card className="border-khaki shadow-lg bg-warm-gray-light">
+          <Card className="border-none shadow-lg bg-light-tan">
             <CardHeader>
-              <CardTitle className="text-prep-burgundy font-gill-sans">Program Location & Hours</CardTitle>
+              <CardTitle className="text-prep-burgundy font-gill-sans text-prep-heading">PROGRAM LOCATION & HOURS</CardTitle>
               <CardDescription className="text-prep-dark-gray font-garamond text-prep-body-garamond">
                 Visit us at our Lower East Side location
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="flex items-start space-x-3">
-                <MapPin className="h-6 w-6 text-prep-burgundy mt-1" />
+                <MapPin className="h-6 w-6 text-pumpkin mt-1" />
                 <div>
-                  <h3 className="font-semibold text-prep-burgundy font-gill-sans text-prep-subheading-gill">Address</h3>
+                  <h3 className="font-semibold text-prep-burgundy font-gill-sans text-prep-subheading-gill">ADDRESS</h3>
                   <p className="text-prep-dark-gray font-garamond text-prep-body-garamond">111 Norfolk Street<br />Lower East Side<br />New York, NY</p>
                 </div>
               </div>
               
               <div className="flex items-start space-x-3">
-                <BookOpen className="h-6 w-6 text-prep-burgundy mt-1" />
+                <BookOpen className="h-6 w-6 text-pumpkin mt-1" />
                 <div>
-                  <h3 className="font-semibold text-prep-burgundy font-gill-sans text-prep-subheading-gill">Program Hours</h3>
+                  <h3 className="font-semibold text-prep-burgundy font-gill-sans text-prep-subheading-gill">PROGRAM HOURS</h3>
                   <p className="text-prep-dark-gray font-garamond text-prep-body-garamond">Saturdays: 11:00 AM - 3:00 PM<br />October - April<br />Excluding Holidays</p>
                 </div>
               </div>
 
-              <div className="bg-dark-tan p-4 rounded-lg">
-                <h3 className="font-semibold text-prep-burgundy mb-2 font-gill-sans text-prep-subheading-gill">About SAYC</h3>
-                <p className="text-prep-dark-gray font-garamond text-prep-body-garamond">
+              <div className="bg-prep-white p-6 rounded-lg shadow-sm">
+                <h3 className="font-semibold text-prep-burgundy mb-3 font-gill-sans text-prep-subheading-gill">ABOUT SAYC</h3>
+                <p className="text-prep-dark-gray font-garamond text-prep-body-garamond leading-relaxed">
                   Students Advocating for Young Children (SAYC) is a free tutoring program dedicated to providing quality education support to children in our community.
                 </p>
               </div>
@@ -105,14 +130,15 @@ const Contact = () => {
           </Card>
 
           {/* Contact People Management */}
-          <Card className="border-khaki shadow-lg bg-prep-white">
+          <Card className="border-none shadow-lg bg-prep-white">
             <CardHeader>
-              <CardTitle className="text-prep-burgundy flex items-center justify-between font-gill-sans">
-                <span>Contact People</span>
+              <CardTitle className="text-prep-burgundy flex items-center justify-between font-gill-sans text-prep-heading">
+                <span>CONTACT PEOPLE</span>
                 <Button 
                   onClick={addContact}
                   size="sm"
                   variant="outline"
+                  className="rounded-none"
                 >
                   <Plus className="h-4 w-4 mr-2" />
                   Add Contact
@@ -124,7 +150,7 @@ const Contact = () => {
             </CardHeader>
             <CardContent className="space-y-6">
               {contacts.map((contact, index) => (
-                <div key={contact.id} className="border border-khaki p-4 rounded-lg space-y-4 bg-warm-gray-light">
+                <div key={contact.id} className="border border-warm-gray-light p-6 rounded-lg space-y-4 bg-light-tan">
                   <div className="flex items-center justify-between">
                     <h4 className="font-semibold text-prep-burgundy font-gill-sans text-prep-subheading-gill">Contact {index + 1}</h4>
                     {contacts.length > 1 && (
@@ -132,6 +158,7 @@ const Contact = () => {
                         onClick={() => removeContact(contact.id)}
                         variant="destructive"
                         size="sm"
+                        className="rounded-none"
                       >
                         <Trash2 className="h-4 w-4" />
                       </Button>
@@ -146,7 +173,7 @@ const Contact = () => {
                         value={contact.name}
                         onChange={(e) => updateContact(contact.id, 'name', e.target.value)}
                         placeholder="Full Name"
-                        className="border-khaki"
+                        className="border-warm-gray-light rounded-none"
                       />
                     </div>
                     <div>
@@ -156,7 +183,7 @@ const Contact = () => {
                         value={contact.role}
                         onChange={(e) => updateContact(contact.id, 'role', e.target.value)}
                         placeholder="e.g., Program Coordinator"
-                        className="border-khaki"
+                        className="border-warm-gray-light rounded-none"
                       />
                     </div>
                   </div>
@@ -173,7 +200,7 @@ const Contact = () => {
                         value={contact.email}
                         onChange={(e) => updateContact(contact.id, 'email', e.target.value)}
                         placeholder="email@example.com"
-                        className="border-khaki"
+                        className="border-warm-gray-light rounded-none"
                       />
                     </div>
                     <div>
@@ -187,45 +214,45 @@ const Contact = () => {
                         value={contact.phone}
                         onChange={(e) => updateContact(contact.id, 'phone', e.target.value)}
                         placeholder="(555) 123-4567"
-                        className="border-khaki"
+                        className="border-warm-gray-light rounded-none"
                       />
                     </div>
                   </div>
                 </div>
               ))}
               
-              <Button variant="outline" className="w-full">
-                Save Contact Information
+              <Button variant="outline" className="w-full rounded-none">
+                SAVE CONTACT INFORMATION
               </Button>
             </CardContent>
           </Card>
         </div>
 
         {/* How to Reach Us */}
-        <Card className="border-khaki shadow-lg mt-8 bg-prep-white">
+        <Card className="border-none shadow-lg mt-8 bg-light-tan">
           <CardHeader>
-            <CardTitle className="text-prep-burgundy font-gill-sans">How to Reach Us</CardTitle>
+            <CardTitle className="text-prep-burgundy font-gill-sans text-prep-heading">HOW TO REACH US</CardTitle>
             <CardDescription className="text-prep-dark-gray font-garamond text-prep-body-garamond">
               Multiple ways to get in touch with our program
             </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="grid md:grid-cols-3 gap-6">
-              <div className="text-center p-6 bg-dark-tan rounded-lg">
-                <Mail className="h-8 w-8 text-prep-burgundy mx-auto mb-4" />
-                <h3 className="font-semibold text-prep-burgundy mb-2 font-gill-sans text-prep-subheading-gill">Email Us</h3>
+              <div className="text-center p-6 bg-prep-white rounded-lg shadow-sm">
+                <Mail className="h-8 w-8 text-pumpkin mx-auto mb-4" />
+                <h3 className="font-semibold text-prep-burgundy mb-2 font-gill-sans text-prep-subheading-gill">EMAIL US</h3>
                 <p className="text-prep-dark-gray font-garamond text-prep-body-garamond">Send us an email for general inquiries or to learn more about volunteering</p>
               </div>
               
-              <div className="text-center p-6 bg-dark-tan rounded-lg">
-                <Phone className="h-8 w-8 text-prep-burgundy mx-auto mb-4" />
-                <h3 className="font-semibold text-prep-burgundy mb-2 font-gill-sans text-prep-subheading-gill">Call Us</h3>
+              <div className="text-center p-6 bg-prep-white rounded-lg shadow-sm">
+                <Phone className="h-8 w-8 text-pumpkin mx-auto mb-4" />
+                <h3 className="font-semibold text-prep-burgundy mb-2 font-gill-sans text-prep-subheading-gill">CALL US</h3>
                 <p className="text-prep-dark-gray font-garamond text-prep-body-garamond">Speak directly with our program coordinators about enrollment or questions</p>
               </div>
               
-              <div className="text-center p-6 bg-dark-tan rounded-lg">
-                <MapPin className="h-8 w-8 text-prep-burgundy mx-auto mb-4" />
-                <h3 className="font-semibold text-prep-burgundy mb-2 font-gill-sans text-prep-subheading-gill">Visit Us</h3>
+              <div className="text-center p-6 bg-prep-white rounded-lg shadow-sm">
+                <MapPin className="h-8 w-8 text-pumpkin mx-auto mb-4" />
+                <h3 className="font-semibold text-prep-burgundy mb-2 font-gill-sans text-prep-subheading-gill">VISIT US</h3>
                 <p className="text-prep-dark-gray font-garamond text-prep-body-garamond">Stop by during program hours to see our tutoring sessions in action</p>
               </div>
             </div>
