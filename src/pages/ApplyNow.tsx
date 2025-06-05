@@ -121,7 +121,7 @@ const ApplyNow = () => {
                 </p>
                 <Button 
                   variant="outline" 
-                  className="w-full rounded-none bg-prep-burgundy text-prep-white border-prep-burgundy hover:bg-purple hover:text-prep-white transition-colors text-lg py-3"
+                  className="w-full rounded-none bg-prep-white text-prep-burgundy border-prep-burgundy hover:bg-prep-burgundy hover:text-prep-white transition-colors text-lg py-3"
                   onClick={() => window.open('#', '_blank')}
                 >
                   OPEN APPLICATION FORM
