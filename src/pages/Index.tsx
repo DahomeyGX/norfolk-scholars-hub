@@ -1,9 +1,49 @@
+
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Calendar, Clock, MapPin, Users, BookOpen, Heart, Menu } from "lucide-react";
+import { Calendar, Clock, MapPin, Users, BookOpen, Heart, Menu, ChevronLeft, ChevronRight } from "lucide-react";
+import { useState } from "react";
 
 const Index = () => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  
+  const heroSlides = [
+    {
+      image: "/lovable-uploads/a26e5798-d73e-4eeb-9306-955023a4fb26.png",
+      quote: "Tutoring isn't just about academics; it's about helping kids believe in themselves.",
+      author: "Claire Huang (XLII), Math Leadership Team"
+    },
+    {
+      image: "/lovable-uploads/3019e69c-8151-47d6-be86-4c66a6c57dde.png",
+      quote: "Every child learns differently. My job is to find the key that unlocks their potential.",
+      author: "Jojo Vadlez (XLIII), English Leadership Team"
+    },
+    {
+      image: "/lovable-uploads/0e8d8b24-487f-438b-88ae-8d6d80cc071b.png",
+      quote: "Teaching kids reminds me that curiosity is the root of all learning.",
+      author: "Eva Nelson-Torres (XLIII), English Leadership Team"
+    },
+    {
+      image: "/lovable-uploads/f271617a-aeb6-4264-9837-65b579df86ee.png",
+      quote: "When a student says, 'Oh! I get it now!' That is the moment I live for.",
+      author: "Habiba Mansour (XLI), Math Leadership Team"
+    },
+    {
+      image: "/lovable-uploads/77255c8e-8f5a-4e2a-9211-9c1da94d25ec.png",
+      quote: "When a student says, 'Oh! I get it now!' That is the moment I live for.",
+      author: "Jordan Gascoigne (XLII), English Leadership Team"
+    }
+  ];
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
+  };
+
   return (
     <div className="min-h-screen bg-prep-white font-gill-sans">
       {/* Sticky Navigation Header - matching Prep for Prep style */}
@@ -40,63 +80,111 @@ const Index = () => {
         </div>
       </nav>
 
-      {/* Hero Section - matching Prep for Prep layout */}
-      <section className="pt-20 pb-16 px-6 bg-gradient-to-b from-prep-white to-light-tan">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-12">
-            {/* Main Hero Heading */}
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-prep-burgundy mb-6 font-gill-sans leading-tight">
-              FREE TUTORING<br />
-              <span className="text-prep-dark-gray">FOR ALL</span>
-            </h1>
-            
-            {/* Subheading */}
-            <p className="text-xl md:text-2xl text-prep-dark-gray mb-8 max-w-4xl mx-auto font-garamond text-prep-subheading-garamond leading-relaxed">
-              Empowering Lower East Side students through dedicated math and English sessions every Saturday
-            </p>
-
-            {/* Key Info Bar */}
-            <div className="flex flex-col md:flex-row gap-6 justify-center items-center mb-12 bg-prep-white p-6 rounded-lg shadow-sm border border-warm-gray-light">
-              <div className="flex items-center text-prep-burgundy">
-                <MapPin className="h-5 w-5 mr-3 text-pumpkin" />
-                <div className="text-left">
-                  <div className="font-semibold text-prep-subheading-gill">LOCATION</div>
-                  <div className="text-prep-dark-gray text-prep-body-gill">111 Norfolk Street, LES</div>
-                </div>
-              </div>
-              <div className="hidden md:block w-px h-12 bg-warm-gray-light"></div>
-              <div className="flex items-center text-prep-burgundy">
-                <Calendar className="h-5 w-5 mr-3 text-pumpkin" />
-                <div className="text-left">
-                  <div className="font-semibold text-prep-subheading-gill">SEASON</div>
-                  <div className="text-prep-dark-gray text-prep-body-gill">October - April</div>
-                </div>
-              </div>
-              <div className="hidden md:block w-px h-12 bg-warm-gray-light"></div>
-              <div className="flex items-center text-prep-burgundy">
-                <Clock className="h-5 w-5 mr-3 text-pumpkin" />
-                <div className="text-left">
-                  <div className="font-semibold text-prep-subheading-gill">HOURS</div>
-                  <div className="text-prep-dark-gray text-prep-body-gill">11:00 AM - 3:00 PM</div>
+      {/* Hero Section with Image Carousel */}
+      <section className="pt-20 relative h-screen">
+        <div className="relative h-full overflow-hidden">
+          {heroSlides.map((slide, index) => (
+            <div
+              key={index}
+              className={`absolute inset-0 transition-opacity duration-1000 ${
+                index === currentSlide ? 'opacity-100' : 'opacity-0'
+              }`}
+            >
+              <img
+                src={slide.image}
+                alt={`SAYC tutoring ${index + 1}`}
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-prep-burgundy bg-opacity-40"></div>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="text-center max-w-4xl mx-auto px-6">
+                  <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-prep-white mb-8 font-gill-sans leading-tight">
+                    FREE TUTORING<br />
+                    <span className="text-pumpkin">FOR ALL</span>
+                  </h1>
+                  <div className="bg-prep-white bg-opacity-90 p-8 rounded-lg mb-8">
+                    <blockquote className="text-xl md:text-2xl text-prep-burgundy mb-4 font-garamond italic leading-relaxed">
+                      "{slide.quote}"
+                    </blockquote>
+                    <cite className="text-prep-dark-gray font-gill-sans text-lg font-semibold">
+                      {slide.author}
+                    </cite>
+                  </div>
+                  <div className="flex flex-col md:flex-row gap-4 justify-center">
+                    <Button variant="outline" asChild className="px-8 py-4 text-lg font-gill-sans text-prep-subheading-gill rounded-none bg-prep-white">
+                      <Link to="/contact">GET STARTED</Link>
+                    </Button>
+                    <Button variant="outline" asChild className="px-8 py-4 text-lg font-gill-sans text-prep-subheading-gill rounded-none bg-prep-white">
+                      <Link to="/schedule">VIEW SCHEDULE</Link>
+                    </Button>
+                  </div>
                 </div>
               </div>
             </div>
+          ))}
+          
+          {/* Navigation Arrows */}
+          <button
+            onClick={prevSlide}
+            className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-prep-white bg-opacity-80 hover:bg-opacity-100 p-2 rounded-full transition-all"
+          >
+            <ChevronLeft className="h-8 w-8 text-prep-burgundy" />
+          </button>
+          <button
+            onClick={nextSlide}
+            className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-prep-white bg-opacity-80 hover:bg-opacity-100 p-2 rounded-full transition-all"
+          >
+            <ChevronRight className="h-8 w-8 text-prep-burgundy" />
+          </button>
+          
+          {/* Slide Indicators */}
+          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-2">
+            {heroSlides.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentSlide(index)}
+                className={`w-3 h-3 rounded-full transition-all ${
+                  index === currentSlide ? 'bg-prep-white' : 'bg-prep-white bg-opacity-50'
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
 
-            {/* Call to Action Buttons */}
-            <div className="flex flex-col md:flex-row gap-4 justify-center">
-              <Button variant="outline" asChild className="px-8 py-4 text-lg font-gill-sans text-prep-subheading-gill rounded-none">
-                <Link to="/contact">GET STARTED</Link>
-              </Button>
-              <Button variant="outline" asChild className="px-8 py-4 text-lg font-gill-sans text-prep-subheading-gill rounded-none">
-                <Link to="/schedule">VIEW SCHEDULE</Link>
-              </Button>
+      {/* Key Info Section */}
+      <section className="py-16 px-6 bg-prep-white">
+        <div className="max-w-5xl mx-auto">
+          <div className="flex flex-col md:flex-row gap-6 justify-center items-center bg-light-tan p-8 rounded-lg shadow-sm border border-warm-gray-light">
+            <div className="flex items-center text-prep-burgundy">
+              <MapPin className="h-5 w-5 mr-3 text-pumpkin" />
+              <div className="text-left">
+                <div className="font-semibold text-prep-subheading-gill">LOCATION</div>
+                <div className="text-prep-dark-gray text-prep-body-gill">111 Norfolk Street, LES</div>
+              </div>
+            </div>
+            <div className="hidden md:block w-px h-12 bg-warm-gray-light"></div>
+            <div className="flex items-center text-prep-burgundy">
+              <Calendar className="h-5 w-5 mr-3 text-pumpkin" />
+              <div className="text-left">
+                <div className="font-semibold text-prep-subheading-gill">SEASON</div>
+                <div className="text-prep-dark-gray text-prep-body-gill">October - April</div>
+              </div>
+            </div>
+            <div className="hidden md:block w-px h-12 bg-warm-gray-light"></div>
+            <div className="flex items-center text-prep-burgundy">
+              <Clock className="h-5 w-5 mr-3 text-pumpkin" />
+              <div className="text-left">
+                <div className="font-semibold text-prep-subheading-gill">HOURS</div>
+                <div className="text-prep-dark-gray text-prep-body-gill">11:00 AM - 3:00 PM</div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* What We Do Section */}
-      <section className="py-20 px-6 bg-prep-white">
+      <section className="py-20 px-6 bg-light-tan">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-prep-burgundy mb-6 font-gill-sans text-prep-heading">
@@ -108,7 +196,7 @@ const Index = () => {
           </div>
           
           <div className="grid md:grid-cols-3 gap-8">
-            <Card className="border-none shadow-lg bg-light-tan hover:shadow-xl transition-shadow">
+            <Card className="border-none shadow-lg bg-prep-white hover:shadow-xl transition-shadow">
               <CardHeader className="text-center pb-4">
                 <div className="w-16 h-16 bg-prep-burgundy rounded-full flex items-center justify-center mx-auto mb-4">
                   <Users className="h-8 w-8 text-prep-white" />
@@ -122,7 +210,7 @@ const Index = () => {
               </CardContent>
             </Card>
             
-            <Card className="border-none shadow-lg bg-light-tan hover:shadow-xl transition-shadow">
+            <Card className="border-none shadow-lg bg-prep-white hover:shadow-xl transition-shadow">
               <CardHeader className="text-center pb-4">
                 <div className="w-16 h-16 bg-prep-burgundy rounded-full flex items-center justify-center mx-auto mb-4">
                   <BookOpen className="h-8 w-8 text-prep-white" />
@@ -136,7 +224,7 @@ const Index = () => {
               </CardContent>
             </Card>
             
-            <Card className="border-none shadow-lg bg-light-tan hover:shadow-xl transition-shadow">
+            <Card className="border-none shadow-lg bg-prep-white hover:shadow-xl transition-shadow">
               <CardHeader className="text-center pb-4">
                 <div className="w-16 h-16 bg-prep-burgundy rounded-full flex items-center justify-center mx-auto mb-4">
                   <Heart className="h-8 w-8 text-prep-white" />
@@ -154,14 +242,14 @@ const Index = () => {
       </section>
 
       {/* Our Story Section */}
-      <section className="py-20 px-6 bg-light-tan">
+      <section className="py-20 px-6 bg-prep-white">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl font-bold text-prep-burgundy mb-6 font-gill-sans text-prep-heading">
               OUR STORY
             </h2>
           </div>
-          <div className="bg-prep-white p-8 md:p-12 shadow-lg">
+          <div className="bg-light-tan p-8 md:p-12 shadow-lg">
             <div className="prose prose-lg mx-auto text-prep-dark-gray">
               <p className="text-lg leading-relaxed mb-6 font-garamond text-prep-subheading-garamond">
                 SAYC (Students Advocating for Young Children) was born from a simple belief: every child deserves access to quality education, regardless of their family's financial circumstances. Located in the heart of the Lower East Side at 111 Norfolk Street, our program has been serving the community with free tutoring services.
