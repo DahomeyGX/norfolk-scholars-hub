@@ -116,7 +116,7 @@ const Contact = () => {
                 <BookOpen className="h-6 w-6 text-pumpkin mt-1" />
                 <div>
                   <h3 className="font-semibold text-prep-burgundy font-gill-sans text-prep-subheading-gill">PROGRAM HOURS</h3>
-                  <p className="text-prep-dark-gray font-garamond text-prep-body-garamond">Saturdays: 11:00 AM - 3:00 PM<br />October - April<br />Excluding Holidays</p>
+                  <p className="text-prep-dark-gray font-garamond text-prep-body-garamond">Saturdays: 11:00 AM - 3:00 PM<br />October - March<br />Excluding Holidays</p>
                 </div>
               </div>
 
@@ -138,7 +138,7 @@ const Contact = () => {
                   onClick={addContact}
                   size="sm"
                   variant="outline"
-                  className="rounded-none"
+                  className="rounded-none bg-prep-white text-prep-burgundy border-prep-burgundy hover:bg-prep-burgundy hover:text-prep-white transition-colors"
                 >
                   <Plus className="h-4 w-4 mr-2" />
                   Add Contact
@@ -221,7 +221,7 @@ const Contact = () => {
                 </div>
               ))}
               
-              <Button variant="outline" className="w-full rounded-none">
+              <Button variant="outline" className="w-full rounded-none bg-prep-white text-prep-burgundy border-prep-burgundy hover:bg-prep-burgundy hover:text-prep-white transition-colors">
                 SAVE CONTACT INFORMATION
               </Button>
             </CardContent>
@@ -256,7 +256,7 @@ const Contact = () => {
                 <p className="text-prep-dark-gray font-garamond text-prep-body-garamond">Stop by during program hours to see our tutoring sessions in action</p>
               </div>
             </div>
-          </CardContent>
+          </div>
         </Card>
       </div>
     </div>

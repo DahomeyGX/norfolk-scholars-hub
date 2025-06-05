@@ -1,21 +1,55 @@
+
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
 import { BookOpen, Clock, Calendar, Users, Utensils, GamepadIcon, Menu } from "lucide-react";
+import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 
 const Schedule = () => {
-  const [dailySchedule, setDailySchedule] = useState({
-    morningGames: "11:00 AM - 11:30 AM: Morning Games",
-    mathSession: "11:30 AM - 1:00 PM: Math Session",
-    lunch: "1:00 PM - 1:30 PM: Lunch",
-    englishSession: "1:30 PM - 3:00 PM: English Session"
-  });
+  const [date, setDate] = useState<Date | undefined>(new Date());
 
-  const [yearlySchedule, setYearlySchedule] = useState("");
+  // Session dates for 2025-2026
+  const sessionDates = [
+    new Date(2025, 9, 18), // October 18
+    new Date(2025, 9, 25), // October 25
+    new Date(2025, 10, 1), // November 1
+    new Date(2025, 10, 8), // November 8
+    new Date(2025, 10, 15), // November 15
+    new Date(2025, 10, 22), // November 22
+    new Date(2025, 10, 29), // November 29
+    new Date(2025, 11, 6), // December 6
+    new Date(2025, 11, 13), // December 13
+    new Date(2026, 0, 3), // January 3
+    new Date(2026, 0, 10), // January 10
+    new Date(2026, 0, 17), // January 17
+    new Date(2026, 0, 24), // January 24
+    new Date(2026, 0, 31), // January 31
+    new Date(2026, 1, 7), // February 7
+    new Date(2026, 1, 14), // February 14
+    new Date(2026, 1, 21), // February 21
+    new Date(2026, 1, 28), // February 28
+    new Date(2026, 2, 7), // March 7
+  ];
+
+  // No session dates
+  const noSessionDates = [
+    new Date(2025, 11, 20), // December 20
+    new Date(2025, 11, 27), // December 27
+  ];
+
+  // Function to check if a date is a session date
+  const isSessionDate = (date: Date) => {
+    return sessionDates.some(sessionDate => 
+      sessionDate.toDateString() === date.toDateString()
+    );
+  };
+
+  // Function to check if a date is a no-session date
+  const isNoSessionDate = (date: Date) => {
+    return noSessionDates.some(noSessionDate => 
+      noSessionDate.toDateString() === date.toDateString()
+    );
+  };
 
   return (
     <div className="min-h-screen bg-prep-white font-gill-sans">
@@ -108,102 +142,117 @@ const Schedule = () => {
             </CardContent>
           </Card>
 
-          {/* Edit Daily Schedule */}
+          {/* Program Information */}
           <Card className="border-none shadow-lg bg-prep-white">
             <CardHeader>
-              <CardTitle className="text-prep-burgundy font-gill-sans text-prep-heading">EDIT DAILY SCHEDULE</CardTitle>
+              <CardTitle className="text-prep-burgundy font-gill-sans text-prep-heading">PROGRAM INFORMATION</CardTitle>
               <CardDescription className="text-prep-dark-gray font-garamond text-prep-body-garamond">
-                Update the daily schedule information
+                Essential details about our tutoring program
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div>
-                <Label htmlFor="morningGames" className="text-prep-burgundy font-gill-sans text-prep-subheading-gill">Morning Games</Label>
-                <Input
-                  id="morningGames"
-                  value={dailySchedule.morningGames}
-                  onChange={(e) => setDailySchedule({...dailySchedule, morningGames: e.target.value})}
-                  className="border-warm-gray-light rounded-none"
-                />
+            <CardContent className="space-y-6">
+              <div className="flex items-center">
+                <Calendar className="h-5 w-5 mr-3 text-pumpkin" />
+                <div>
+                  <span className="font-semibold text-prep-burgundy font-gill-sans text-prep-subheading-gill">Season:</span>
+                  <span className="text-prep-dark-gray font-garamond text-prep-body-garamond ml-2">October to March</span>
+                </div>
               </div>
-              <div>
-                <Label htmlFor="mathSession" className="text-prep-burgundy font-gill-sans text-prep-subheading-gill">Math Session</Label>
-                <Input
-                  id="mathSession"
-                  value={dailySchedule.mathSession}
-                  onChange={(e) => setDailySchedule({...dailySchedule, mathSession: e.target.value})}
-                  className="border-warm-gray-light rounded-none"
-                />
+              <div className="flex items-center">
+                <Clock className="h-5 w-5 mr-3 text-pumpkin" />
+                <div>
+                  <span className="font-semibold text-prep-burgundy font-gill-sans text-prep-subheading-gill">Time:</span>
+                  <span className="text-prep-dark-gray font-garamond text-prep-body-garamond ml-2">11:00 AM - 3:00 PM</span>
+                </div>
               </div>
-              <div>
-                <Label htmlFor="lunch" className="text-prep-burgundy font-gill-sans text-prep-subheading-gill">Lunch</Label>
-                <Input
-                  id="lunch"
-                  value={dailySchedule.lunch}
-                  onChange={(e) => setDailySchedule({...dailySchedule, lunch: e.target.value})}
-                  className="border-warm-gray-light rounded-none"
-                />
+              <div className="flex items-center">
+                <Users className="h-5 w-5 mr-3 text-pumpkin" />
+                <div>
+                  <span className="font-semibold text-prep-burgundy font-gill-sans text-prep-subheading-gill">Frequency:</span>
+                  <span className="text-prep-dark-gray font-garamond text-prep-body-garamond ml-2">Every Saturday (excluding holidays)</span>
+                </div>
               </div>
-              <div>
-                <Label htmlFor="englishSession" className="text-prep-burgundy font-gill-sans text-prep-subheading-gill">English Session</Label>
-                <Input
-                  id="englishSession"
-                  value={dailySchedule.englishSession}
-                  onChange={(e) => setDailySchedule({...dailySchedule, englishSession: e.target.value})}
-                  className="border-warm-gray-light rounded-none"
-                />
+              <div className="bg-light-tan p-4 rounded-lg">
+                <h3 className="font-semibold text-prep-burgundy mb-2 font-gill-sans text-prep-subheading-gill">What to Expect</h3>
+                <p className="text-prep-dark-gray font-garamond text-prep-body-garamond text-sm leading-relaxed">
+                  Each Saturday begins with fun morning activities to help students connect and feel comfortable. 
+                  We then move into focused learning sessions for math and English, with a shared lunch break 
+                  that builds community among our students.
+                </p>
               </div>
-              <Button variant="outline" className="w-full rounded-none">
-                UPDATE DAILY SCHEDULE
-              </Button>
             </CardContent>
           </Card>
         </div>
 
-        {/* Yearly Schedule */}
+        {/* Calendar Section */}
         <Card className="border-none shadow-lg mt-8 bg-light-tan">
           <CardHeader>
             <CardTitle className="text-prep-burgundy flex items-center font-gill-sans text-prep-heading">
               <Calendar className="h-6 w-6 mr-3" />
-              YEARLY SCHEDULE (OCTOBER - APRIL)
+              2025-2026 SESSION CALENDAR
             </CardTitle>
             <CardDescription className="text-prep-dark-gray font-garamond text-prep-body-garamond">
-              Program runs every Saturday from October to April, excluding holidays
+              Program runs every Saturday from October to March, excluding winter break
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="grid md:grid-cols-2 gap-6">
-              <div>
-                <Label htmlFor="yearlySchedule" className="text-prep-burgundy text-lg mb-3 block font-gill-sans text-prep-subheading-gill">
-                  Program Calendar & Special Events
-                </Label>
-                <Textarea
-                  id="yearlySchedule"
-                  placeholder="Enter yearly schedule details, special events, holiday breaks, etc..."
-                  value={yearlySchedule}
-                  onChange={(e) => setYearlySchedule(e.target.value)}
-                  className="border-warm-gray-light min-h-[200px] rounded-none"
+            <div className="grid lg:grid-cols-2 gap-8">
+              <div className="flex justify-center">
+                <CalendarComponent
+                  mode="single"
+                  selected={date}
+                  onSelect={setDate}
+                  className="rounded-md border border-warm-gray-light bg-prep-white"
+                  modifiers={{
+                    session: sessionDates,
+                    noSession: noSessionDates,
+                  }}
+                  modifiersStyles={{
+                    session: { 
+                      backgroundColor: '#8B1538', 
+                      color: 'white',
+                      fontWeight: 'bold'
+                    },
+                    noSession: { 
+                      backgroundColor: '#f87171', 
+                      color: 'white',
+                      fontWeight: 'bold',
+                      textDecoration: 'line-through'
+                    },
+                  }}
                 />
-                <Button variant="outline" className="w-full mt-4 rounded-none">
-                  UPDATE YEARLY SCHEDULE
-                </Button>
               </div>
-              <div className="bg-prep-white p-6 shadow-sm">
-                <h3 className="text-prep-burgundy font-semibold text-lg mb-4 font-gill-sans text-prep-subheading-gill">PROGRAM INFORMATION</h3>
-                <ul className="space-y-3 text-prep-dark-gray">
-                  <li className="flex items-center">
-                    <Calendar className="h-4 w-4 mr-3 text-pumpkin" />
-                    <span className="font-garamond text-prep-body-garamond">Season: October to April</span>
-                  </li>
-                  <li className="flex items-center">
-                    <Clock className="h-4 w-4 mr-3 text-pumpkin" />
-                    <span className="font-garamond text-prep-body-garamond">Time: 11:00 AM - 3:00 PM</span>
-                  </li>
-                  <li className="flex items-center">
-                    <Users className="h-4 w-4 mr-3 text-pumpkin" />
-                    <span className="font-garamond text-prep-body-garamond">Every Saturday (excluding holidays)</span>
-                  </li>
-                </ul>
+              <div className="space-y-4">
+                <div className="bg-prep-white p-6 rounded-lg shadow-sm">
+                  <h3 className="text-prep-burgundy font-semibold text-lg mb-4 font-gill-sans text-prep-subheading-gill">CALENDAR LEGEND</h3>
+                  <div className="space-y-3">
+                    <div className="flex items-center">
+                      <div className="w-4 h-4 bg-prep-burgundy rounded mr-3"></div>
+                      <span className="font-garamond text-prep-body-garamond text-prep-dark-gray">Regular Session Days</span>
+                    </div>
+                    <div className="flex items-center">
+                      <div className="w-4 h-4 bg-red-400 rounded mr-3"></div>
+                      <span className="font-garamond text-prep-body-garamond text-prep-dark-gray">No Session (Winter Break)</span>
+                    </div>
+                  </div>
+                </div>
+                <div className="bg-prep-white p-6 rounded-lg shadow-sm">
+                  <h3 className="text-prep-burgundy font-semibold text-lg mb-4 font-gill-sans text-prep-subheading-gill">IMPORTANT DATES</h3>
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between">
+                      <span className="font-garamond text-prep-body-garamond text-prep-dark-gray">First Session:</span>
+                      <span className="font-semibold font-garamond text-prep-body-garamond text-prep-burgundy">October 18, 2025</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="font-garamond text-prep-body-garamond text-prep-dark-gray">Winter Break:</span>
+                      <span className="font-semibold font-garamond text-prep-body-garamond text-prep-burgundy">Dec 20 & 27</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="font-garamond text-prep-body-garamond text-prep-dark-gray">Last Session:</span>
+                      <span className="font-semibold font-garamond text-prep-body-garamond text-prep-burgundy">March 7, 2026</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </CardContent>

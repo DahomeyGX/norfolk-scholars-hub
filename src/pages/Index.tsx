@@ -3,10 +3,11 @@ import { Link } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Calendar, Clock, MapPin, Users, BookOpen, Heart, Menu, ChevronLeft, ChevronRight } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Index = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isVisible, setIsVisible] = useState(true);
   
   const heroSlides = [
     {
@@ -36,12 +37,33 @@ const Index = () => {
     }
   ];
 
+  // Auto-advance slides every 5 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsVisible(false);
+      setTimeout(() => {
+        setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+        setIsVisible(true);
+      }, 500);
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [heroSlides.length]);
+
   const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+    setIsVisible(false);
+    setTimeout(() => {
+      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+      setIsVisible(true);
+    }, 500);
   };
 
   const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
+    setIsVisible(false);
+    setTimeout(() => {
+      setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
+      setIsVisible(true);
+    }, 500);
   };
 
   return (
@@ -83,45 +105,47 @@ const Index = () => {
       {/* Hero Section with Image Carousel */}
       <section className="pt-20 relative h-screen">
         <div className="relative h-full overflow-hidden">
-          {heroSlides.map((slide, index) => (
-            <div
-              key={index}
-              className={`absolute inset-0 transition-opacity duration-1000 ${
-                index === currentSlide ? 'opacity-100' : 'opacity-0'
+          <div className="absolute inset-0">
+            <img
+              src={heroSlides[currentSlide].image}
+              alt={`SAYC tutoring ${currentSlide + 1}`}
+              className={`w-full h-full object-cover transition-opacity duration-1000 ${
+                isVisible ? 'opacity-100' : 'opacity-0'
               }`}
-            >
-              <img
-                src={slide.image}
-                alt={`SAYC tutoring ${index + 1}`}
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-prep-burgundy bg-opacity-40"></div>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-center max-w-4xl mx-auto px-6">
-                  <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-prep-white mb-8 font-gill-sans leading-tight">
-                    FREE TUTORING<br />
-                    <span className="text-pumpkin">FOR ALL</span>
-                  </h1>
-                  <div className="bg-prep-white bg-opacity-90 p-8 rounded-lg mb-8">
-                    <blockquote className="text-xl md:text-2xl text-prep-burgundy mb-4 font-garamond italic leading-relaxed">
-                      "{slide.quote}"
-                    </blockquote>
-                    <cite className="text-prep-dark-gray font-gill-sans text-lg font-semibold">
-                      {slide.author}
-                    </cite>
-                  </div>
-                  <div className="flex flex-col md:flex-row gap-4 justify-center">
-                    <Button variant="outline" asChild className="px-8 py-4 text-lg font-gill-sans text-prep-subheading-gill rounded-none bg-prep-white">
-                      <Link to="/contact">GET STARTED</Link>
-                    </Button>
-                    <Button variant="outline" asChild className="px-8 py-4 text-lg font-gill-sans text-prep-subheading-gill rounded-none bg-prep-white">
-                      <Link to="/schedule">VIEW SCHEDULE</Link>
-                    </Button>
-                  </div>
-                </div>
+            />
+            <div className="absolute inset-0 bg-prep-burgundy bg-opacity-40"></div>
+          </div>
+          
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="text-center max-w-4xl mx-auto px-6">
+              <h1 className={`text-4xl md:text-6xl lg:text-7xl font-bold text-prep-white mb-8 font-gill-sans leading-tight transition-all duration-1000 ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}>
+                FREE TUTORING<br />
+                <span className="text-pumpkin">FOR ALL</span>
+              </h1>
+              <div className={`bg-prep-white bg-opacity-90 p-8 rounded-lg mb-8 transition-all duration-1000 delay-500 ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}>
+                <blockquote className="text-xl md:text-2xl text-prep-burgundy mb-4 font-garamond italic leading-relaxed">
+                  "{heroSlides[currentSlide].quote}"
+                </blockquote>
+                <cite className="text-prep-dark-gray font-gill-sans text-lg font-semibold">
+                  {heroSlides[currentSlide].author}
+                </cite>
+              </div>
+              <div className={`flex flex-col md:flex-row gap-4 justify-center transition-all duration-1000 delay-700 ${
+                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}>
+                <Button variant="outline" asChild className="px-8 py-4 text-lg font-gill-sans text-prep-subheading-gill rounded-none bg-prep-white text-prep-burgundy border-prep-burgundy hover:bg-prep-burgundy hover:text-prep-white transition-colors">
+                  <Link to="/contact">GET STARTED</Link>
+                </Button>
+                <Button variant="outline" asChild className="px-8 py-4 text-lg font-gill-sans text-prep-subheading-gill rounded-none bg-prep-white text-prep-burgundy border-prep-burgundy hover:bg-prep-burgundy hover:text-prep-white transition-colors">
+                  <Link to="/schedule">VIEW SCHEDULE</Link>
+                </Button>
               </div>
             </div>
-          ))}
+          </div>
           
           {/* Navigation Arrows */}
           <button
@@ -168,7 +192,7 @@ const Index = () => {
               <Calendar className="h-5 w-5 mr-3 text-pumpkin" />
               <div className="text-left">
                 <div className="font-semibold text-prep-subheading-gill">SEASON</div>
-                <div className="text-prep-dark-gray text-prep-body-gill">October - April</div>
+                <div className="text-prep-dark-gray text-prep-body-gill">October - March</div>
               </div>
             </div>
             <div className="hidden md:block w-px h-12 bg-warm-gray-light"></div>
@@ -258,7 +282,7 @@ const Index = () => {
                 Our dedicated volunteers, many of whom are students themselves, understand the challenges young learners face. We've created a warm, welcoming environment where children can thrive academically while building lasting friendships and confidence.
               </p>
               <p className="text-lg leading-relaxed font-garamond text-prep-subheading-garamond">
-                Every Saturday from October to April, we open our doors to provide structured learning sessions that combine academic excellence with fun activities, ensuring that education is both effective and enjoyable.
+                Every Saturday from October to March, we open our doors to provide structured learning sessions that combine academic excellence with fun activities, ensuring that education is both effective and enjoyable.
               </p>
             </div>
           </div>
