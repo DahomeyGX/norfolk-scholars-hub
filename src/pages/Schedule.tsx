@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Clock, Calendar, Users, Utensils, GamepadIcon } from "lucide-react";
+import { Clock, Calendar, Users, Utensils, GamepadIcon, BookOpen } from "lucide-react";
 import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import MobileNavigation from "@/components/MobileNavigation";
 
