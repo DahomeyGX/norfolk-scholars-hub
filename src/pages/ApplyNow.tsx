@@ -110,7 +110,7 @@ const ApplyNow = () => {
             <CardContent className="text-center space-y-6">
               <div className="flex justify-center">
                 <img 
-                  src="/lovable-uploads/cbe55eec-514b-42c5-99a9-8e2eb8cd82e7.png" 
+                  src="/uploads/sayc-application-qr-code.png" 
                   alt="QR Code for SAYC Application"
                   className="w-64 h-64 border border-warm-gray-light rounded-lg shadow-sm"
                 />

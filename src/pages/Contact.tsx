@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -7,45 +6,27 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { BookOpen, Phone, Mail, MapPin, Plus, Trash2, Menu } from "lucide-react";
 
-interface ContactPerson {
-  id: string;
-  name: string;
-  email: string;
-  phone: string;
-  role: string;
-}
-
 const Contact = () => {
-  const [contacts, setContacts] = useState<ContactPerson[]>([
+  const staffMembers = [
     {
-      id: "1",
-      name: "",
-      email: "",
-      phone: "",
-      role: "Program Coordinator"
+      name: "Sarah Johnson",
+      role: "Program Director",
+      email: "sarah.johnson@sayc.org",
+      phone: "(555) 123-4567"
+    },
+    {
+      name: "Michael Chen",
+      role: "Math Coordinator",
+      email: "michael.chen@sayc.org", 
+      phone: "(555) 234-5678"
+    },
+    {
+      name: "Amanda Rodriguez",
+      role: "English Coordinator",
+      email: "amanda.rodriguez@sayc.org",
+      phone: "(555) 345-6789"
     }
-  ]);
-
-  const addContact = () => {
-    const newContact: ContactPerson = {
-      id: Date.now().toString(),
-      name: "",
-      email: "",
-      phone: "",
-      role: ""
-    };
-    setContacts([...contacts, newContact]);
-  };
-
-  const removeContact = (id: string) => {
-    setContacts(contacts.filter(contact => contact.id !== id));
-  };
-
-  const updateContact = (id: string, field: keyof ContactPerson, value: string) => {
-    setContacts(contacts.map(contact => 
-      contact.id === id ? { ...contact, [field]: value } : contact
-    ));
-  };
+  ];
 
   return (
     <div className="min-h-screen bg-prep-white font-gill-sans">
@@ -122,111 +103,41 @@ const Contact = () => {
                   <p className="text-prep-dark-gray font-garamond text-prep-body-garamond">Saturdays: 11:00 AM - 3:00 PM<br />October - March<br />Excluding Holidays</p>
                 </div>
               </div>
-
-              <div className="bg-prep-white p-6 rounded-lg shadow-sm">
-                <h3 className="font-semibold text-prep-burgundy mb-3 font-gill-sans text-prep-subheading-gill">ABOUT SAYC</h3>
-                <p className="text-prep-dark-gray font-garamond text-prep-body-garamond leading-relaxed">
-                  Students Advocating for Young Children (SAYC) is a free tutoring program dedicated to providing quality education support to children in our community.
-                </p>
-              </div>
             </CardContent>
           </Card>
 
-          {/* Contact People Management */}
+          {/* Staff Members */}
           <Card className="border-none shadow-lg bg-prep-white">
             <CardHeader>
-              <CardTitle className="text-prep-burgundy flex items-center justify-between font-gill-sans text-prep-heading">
-                <span>CONTACT PEOPLE</span>
-                <Button 
-                  onClick={addContact}
-                  size="sm"
-                  variant="outline"
-                  className="rounded-none bg-prep-white text-prep-burgundy border-prep-burgundy hover:bg-prep-burgundy hover:text-prep-white transition-colors"
-                >
-                  <Plus className="h-4 w-4 mr-2" />
-                  Add Contact
-                </Button>
-              </CardTitle>
+              <CardTitle className="text-prep-burgundy font-gill-sans text-prep-heading">OUR TEAM</CardTitle>
               <CardDescription className="text-prep-dark-gray font-garamond text-prep-body-garamond">
-                Manage contact information for program staff and volunteers
+                Meet our dedicated program staff
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-              {contacts.map((contact, index) => (
-                <div key={contact.id} className="border border-warm-gray-light p-6 rounded-lg space-y-4 bg-light-tan">
-                  <div className="flex items-center justify-between">
-                    <h4 className="font-semibold text-prep-burgundy font-gill-sans text-prep-subheading-gill">Contact {index + 1}</h4>
-                    {contacts.length > 1 && (
-                      <Button
-                        onClick={() => removeContact(contact.id)}
-                        variant="destructive"
-                        size="sm"
-                        className="rounded-none"
-                      >
-                        <Trash2 className="h-4 w-4" />
-                      </Button>
-                    )}
-                  </div>
-                  
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div>
-                      <Label htmlFor={`name-${contact.id}`} className="text-prep-burgundy font-gill-sans text-prep-subheading-gill">Name</Label>
-                      <Input
-                        id={`name-${contact.id}`}
-                        value={contact.name}
-                        onChange={(e) => updateContact(contact.id, 'name', e.target.value)}
-                        placeholder="Full Name"
-                        className="border-warm-gray-light rounded-none"
-                      />
+              {staffMembers.map((staff, index) => (
+                <div key={index} className="border border-warm-gray-light p-6 rounded-lg bg-light-tan">
+                  <div className="flex items-center space-x-4 mb-4">
+                    <div className="w-16 h-16 rounded-full border-4 border-prep-burgundy bg-black flex items-center justify-center">
+                      {/* Placeholder for future profile picture */}
                     </div>
                     <div>
-                      <Label htmlFor={`role-${contact.id}`} className="text-prep-burgundy font-gill-sans text-prep-subheading-gill">Role</Label>
-                      <Input
-                        id={`role-${contact.id}`}
-                        value={contact.role}
-                        onChange={(e) => updateContact(contact.id, 'role', e.target.value)}
-                        placeholder="e.g., Program Coordinator"
-                        className="border-warm-gray-light rounded-none"
-                      />
+                      <h4 className="font-semibold text-prep-burgundy font-gill-sans text-prep-subheading-gill">{staff.name}</h4>
+                      <p className="text-prep-dark-gray font-garamond text-prep-body-garamond">{staff.role}</p>
                     </div>
                   </div>
-                  
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div>
-                      <Label htmlFor={`email-${contact.id}`} className="text-prep-burgundy flex items-center font-gill-sans text-prep-subheading-gill">
-                        <Mail className="h-4 w-4 mr-1" />
-                        Email
-                      </Label>
-                      <Input
-                        id={`email-${contact.id}`}
-                        type="email"
-                        value={contact.email}
-                        onChange={(e) => updateContact(contact.id, 'email', e.target.value)}
-                        placeholder="email@example.com"
-                        className="border-warm-gray-light rounded-none"
-                      />
+                  <div className="space-y-2">
+                    <div className="flex items-center space-x-2">
+                      <Mail className="h-4 w-4 text-pumpkin" />
+                      <span className="text-prep-dark-gray font-garamond text-prep-body-garamond">{staff.email}</span>
                     </div>
-                    <div>
-                      <Label htmlFor={`phone-${contact.id}`} className="text-prep-burgundy flex items-center font-gill-sans text-prep-subheading-gill">
-                        <Phone className="h-4 w-4 mr-1" />
-                        Phone
-                      </Label>
-                      <Input
-                        id={`phone-${contact.id}`}
-                        type="tel"
-                        value={contact.phone}
-                        onChange={(e) => updateContact(contact.id, 'phone', e.target.value)}
-                        placeholder="(555) 123-4567"
-                        className="border-warm-gray-light rounded-none"
-                      />
+                    <div className="flex items-center space-x-2">
+                      <Phone className="h-4 w-4 text-pumpkin" />
+                      <span className="text-prep-dark-gray font-garamond text-prep-body-garamond">{staff.phone}</span>
                     </div>
                   </div>
                 </div>
               ))}
-              
-              <Button variant="outline" className="w-full rounded-none bg-prep-white text-prep-burgundy border-prep-burgundy hover:bg-prep-burgundy hover:text-prep-white transition-colors">
-                SAVE CONTACT INFORMATION
-              </Button>
             </CardContent>
           </Card>
         </div>

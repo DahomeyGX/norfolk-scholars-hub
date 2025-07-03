@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -12,33 +11,33 @@ const Index = () => {
   
   const heroSlides = [
     {
-      image: "/lovable-uploads/a26e5798-d73e-4eeb-9306-955023a4fb26.png",
+      image: "/uploads/sayc-tutoring-session-1.png",
       quote: "Tutoring isn't just about academics; it's about helping kids believe in themselves.",
       author: "Claire Huang (XLII), Math Leadership Team"
     },
     {
-      image: "/lovable-uploads/3019e69c-8151-47d6-be86-4c66a6c57dde.png",
+      image: "/uploads/sayc-tutoring-session-2.png",
       quote: "Every child learns differently. My job is to find the key that unlocks their potential.",
       author: "Jojo Valdez (XLIII), English Leadership Team"
     },
     {
-      image: "/lovable-uploads/0e8d8b24-487f-438b-88ae-8d6d80cc071b.png",
+      image: "/uploads/sayc-tutoring-session-3.png",
       quote: "Teaching kids reminds me that curiosity is the root of all learning.",
       author: "Eva Nelson-Torres (XLIII), English Leadership Team"
     },
     {
-      image: "/lovable-uploads/f271617a-aeb6-4264-9837-65b579df86ee.png",
+      image: "/uploads/sayc-tutoring-session-4.png",
       quote: "When a student says, 'Oh! I get it now!' That is the moment I live for.",
       author: "Habiba Mansour (XLIII), Math Leadership Team"
     },
     {
-      image: "/lovable-uploads/77255c8e-8f5a-4e2a-9211-9c1da94d25ec.png",
+      image: "/uploads/sayc-tutoring-session-5.png",
       quote: "Education is the most powerful weapon which you can use to change the world.",
       author: "Jordan Gascoigne (XLII), English Leadership Team"
     }
   ];
 
-  // Auto-advance slides with smoother transitions
+  // Auto-advance slides with improved transitions
   useEffect(() => {
     const interval = setInterval(() => {
       // Start fade out
@@ -47,15 +46,13 @@ const Index = () => {
         setImageVisible(false);
         setTimeout(() => {
           setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
-          // Start fade in
+          // Immediate fade in to prevent flash
+          setImageVisible(true);
           setTimeout(() => {
-            setImageVisible(true);
-            setTimeout(() => {
-              setQuoteVisible(true);
-            }, 800);
-          }, 200);
-        }, 600);
-      }, 400);
+            setQuoteVisible(true);
+          }, 500);
+        }, 300);
+      }, 200);
     }, 6000);
 
     return () => clearInterval(interval);
@@ -75,14 +72,12 @@ const Index = () => {
       setImageVisible(false);
       setTimeout(() => {
         setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+        setImageVisible(true);
         setTimeout(() => {
-          setImageVisible(true);
-          setTimeout(() => {
-            setQuoteVisible(true);
-          }, 800);
-        }, 200);
-      }, 600);
-    }, 400);
+          setQuoteVisible(true);
+        }, 500);
+      }, 300);
+    }, 200);
   };
 
   const prevSlide = () => {
@@ -91,14 +86,12 @@ const Index = () => {
       setImageVisible(false);
       setTimeout(() => {
         setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
+        setImageVisible(true);
         setTimeout(() => {
-          setImageVisible(true);
-          setTimeout(() => {
-            setQuoteVisible(true);
-          }, 800);
-        }, 200);
-      }, 600);
-    }, 400);
+          setQuoteVisible(true);
+        }, 500);
+      }, 300);
+    }, 200);
   };
 
   return (
@@ -147,7 +140,7 @@ const Index = () => {
             <img
               src={heroSlides[currentSlide].image}
               alt={`SAYC tutoring ${currentSlide + 1}`}
-              className={`w-full h-full object-cover transition-opacity duration-1000 ${
+              className={`w-full h-full object-cover transition-opacity duration-500 ${
                 imageVisible ? 'opacity-100' : 'opacity-0'
               }`}
             />
@@ -339,11 +332,13 @@ const Index = () => {
           <div className="bg-prep-white p-8 md:p-12 shadow-lg rounded-lg">
             <div className="flex flex-col lg:flex-row items-center gap-8">
               <div className="lg:w-1/3 flex justify-center">
-                <img 
-                  src="/lovable-uploads/a8a9d169-5740-41a3-ad46-689e637501cb.png" 
-                  alt="Prep for Prep Logo"
-                  className="max-w-full h-auto"
-                />
+                <div className="bg-prep-burgundy p-8 rounded-lg">
+                  <img 
+                    src="/uploads/prep-for-prep-logo.png" 
+                    alt="Prep for Prep Logo"
+                    className="max-w-full h-auto"
+                  />
+                </div>
               </div>
               
               <div className="lg:w-2/3 space-y-6">
