@@ -6,8 +6,7 @@ import { useState, useEffect } from "react";
 
 const Index = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [imageVisible, setImageVisible] = useState(true);
-  const [quoteVisible, setQuoteVisible] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   
   const heroSlides = [
     {
@@ -37,61 +36,33 @@ const Index = () => {
     }
   ];
 
-  // Auto-advance slides with improved transitions
+  // Auto-advance slides with smoother transitions
   useEffect(() => {
     const interval = setInterval(() => {
-      // Start fade out
-      setQuoteVisible(false);
+      setIsTransitioning(true);
       setTimeout(() => {
-        setImageVisible(false);
-        setTimeout(() => {
-          setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
-          // Immediate fade in to prevent flash
-          setImageVisible(true);
-          setTimeout(() => {
-            setQuoteVisible(true);
-          }, 500);
-        }, 300);
-      }, 200);
+        setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+        setIsTransitioning(false);
+      }, 500);
     }, 6000);
 
     return () => clearInterval(interval);
   }, [heroSlides.length]);
 
-  // Initialize quote visibility
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setQuoteVisible(true);
-    }, 1200);
-    return () => clearTimeout(timer);
-  }, []);
-
   const nextSlide = () => {
-    setQuoteVisible(false);
+    setIsTransitioning(true);
     setTimeout(() => {
-      setImageVisible(false);
-      setTimeout(() => {
-        setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
-        setImageVisible(true);
-        setTimeout(() => {
-          setQuoteVisible(true);
-        }, 500);
-      }, 300);
-    }, 200);
+      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
+      setIsTransitioning(false);
+    }, 500);
   };
 
   const prevSlide = () => {
-    setQuoteVisible(false);
+    setIsTransitioning(true);
     setTimeout(() => {
-      setImageVisible(false);
-      setTimeout(() => {
-        setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
-        setImageVisible(true);
-        setTimeout(() => {
-          setQuoteVisible(true);
-        }, 500);
-      }, 300);
-    }, 200);
+      setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
+      setIsTransitioning(false);
+    }, 500);
   };
 
   return (
@@ -141,7 +112,7 @@ const Index = () => {
               src={heroSlides[currentSlide].image}
               alt={`SAYC tutoring ${currentSlide + 1}`}
               className={`w-full h-full object-cover transition-opacity duration-500 ${
-                imageVisible ? 'opacity-100' : 'opacity-0'
+                isTransitioning ? 'opacity-0' : 'opacity-100'
               }`}
             />
             <div className="absolute inset-0 bg-prep-burgundy bg-opacity-40"></div>
@@ -149,14 +120,14 @@ const Index = () => {
           
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="text-center max-w-4xl mx-auto px-6">
-              <h1 className={`text-4xl md:text-6xl lg:text-7xl font-bold text-prep-white mb-8 font-gill-sans leading-tight transition-all duration-1000 ${
-                imageVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              <h1 className={`text-4xl md:text-6xl lg:text-7xl font-bold mb-8 font-gill-sans leading-tight transition-all duration-500 ${
+                isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
               }`}>
                 <span className="text-prep-white">SAYC</span><br />
                 <span className="text-pumpkin">SATURDAY ACADEMY</span>
               </h1>
-              <div className={`bg-prep-white bg-opacity-90 p-8 rounded-lg mb-8 transition-all duration-1000 ${
-                quoteVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              <div className={`bg-prep-white bg-opacity-90 p-8 rounded-lg mb-8 transition-all duration-500 ${
+                isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
               }`}>
                 <blockquote className="text-xl md:text-2xl text-prep-burgundy mb-4 font-garamond italic leading-relaxed">
                   "{heroSlides[currentSlide].quote}"
@@ -165,8 +136,8 @@ const Index = () => {
                   {heroSlides[currentSlide].author}
                 </cite>
               </div>
-              <div className={`flex flex-col md:flex-row gap-4 justify-center transition-all duration-1000 delay-300 ${
-                quoteVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              <div className={`flex flex-col md:flex-row gap-4 justify-center transition-all duration-500 delay-300 ${
+                isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'
               }`}>
                 <Button variant="outline" asChild className="px-8 py-4 text-lg font-gill-sans text-prep-subheading-gill rounded-none bg-prep-white text-prep-burgundy border-prep-burgundy hover:bg-prep-burgundy hover:text-prep-white transition-colors">
                   <Link to="/contact">GET STARTED</Link>

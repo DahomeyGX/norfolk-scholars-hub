@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -11,19 +12,19 @@ const Contact = () => {
     {
       name: "Sarah Johnson",
       role: "Program Director",
-      email: "sarah.johnson@sayc.org",
+      email: "sarah.johnson@prepforprep.org",
       phone: "(555) 123-4567"
     },
     {
       name: "Michael Chen",
       role: "Math Coordinator",
-      email: "michael.chen@sayc.org", 
+      email: "michael.chen@prepforprep.org", 
       phone: "(555) 234-5678"
     },
     {
       name: "Amanda Rodriguez",
       role: "English Coordinator",
-      email: "amanda.rodriguez@sayc.org",
+      email: "amanda.rodriguez@prepforprep.org",
       phone: "(555) 345-6789"
     }
   ];
@@ -101,6 +102,28 @@ const Contact = () => {
                 <div>
                   <h3 className="font-semibold text-prep-burgundy font-gill-sans text-prep-subheading-gill">PROGRAM HOURS</h3>
                   <p className="text-prep-dark-gray font-garamond text-prep-body-garamond">Saturdays: 11:00 AM - 3:00 PM<br />October - March<br />Excluding Holidays</p>
+                </div>
+              </div>
+
+              {/* Map */}
+              <div className="mt-6">
+                <h3 className="font-semibold text-prep-burgundy font-gill-sans text-prep-subheading-gill mb-4">LOCATION MAP</h3>
+                <div className="w-full h-64 bg-prep-white rounded-lg border border-warm-gray-light overflow-hidden">
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3024.0867337!2d-73.98947508459467!3d40.72057037932939!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2598b0b6b0b0b%3A0x0!2s111%20Norfolk%20St%2C%20New%20York%2C%20NY%2010002!5e0!3m2!1sen!2sus!4v1625000000000!5m2!1sen!2sus"
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title="SAYC Location Map"
+                  ></iframe>
+                </div>
+                <div className="mt-4 text-prep-dark-gray font-garamond text-prep-body-garamond">
+                  <p className="font-semibold text-prep-burgundy font-gill-sans">PUBLIC TRANSPORTATION:</p>
+                  <p><strong>Subway:</strong> Delancey Street-Essex Street (F, M, J, Z)</p>
+                  <p><strong>Bus:</strong> M14A SBS, M9, B39, M15 SBS</p>
                 </div>
               </div>
             </CardContent>
