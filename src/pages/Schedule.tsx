@@ -1,11 +1,13 @@
 
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { BookOpen, Clock, Calendar, Users, Utensils, GamepadIcon, Menu } from "lucide-react";
+import { Clock, Calendar, Users, Utensils, GamepadIcon } from "lucide-react";
 import { Calendar as CalendarComponent } from "@/components/ui/calendar";
+import MobileNavigation from "@/components/MobileNavigation";
 
 const Schedule = () => {
+  const location = useLocation();
   const [date, setDate] = useState<Date | undefined>(new Date());
 
   // Session dates for 2025-2026
@@ -59,7 +61,11 @@ const Schedule = () => {
           <div className="flex items-center justify-between h-20">
             {/* Logo Section */}
             <div className="flex items-center space-x-3">
-              <BookOpen className="h-8 w-8 text-prep-burgundy" />
+              <img 
+                src="/lovable-uploads/a3ae56ad-0489-450a-bea1-2f8cc7ecd47e.png" 
+                alt="SAYC Logo" 
+                className="h-8 w-8"
+              />
               <div className="flex flex-col">
                 <span className="text-2xl font-bold text-prep-burgundy font-gill-sans tracking-tight">SAYC</span>
                 <span className="text-xs text-prep-dark-gray font-gill-sans">Students Advocating for Young Children</span>
@@ -82,10 +88,7 @@ const Schedule = () => {
               </Link>
             </div>
 
-            {/* Mobile Menu Button */}
-            <div className="md:hidden">
-              <Menu className="h-6 w-6 text-prep-burgundy" />
-            </div>
+            <MobileNavigation currentPath={location.pathname} />
           </div>
         </div>
       </nav>

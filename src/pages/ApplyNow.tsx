@@ -1,10 +1,12 @@
-
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { BookOpen, Menu, CheckCircle } from "lucide-react";
+import { CheckCircle } from "lucide-react";
+import MobileNavigation from "@/components/MobileNavigation";
 
 const ApplyNow = () => {
+  const location = useLocation();
+  
   const requirements = [
     {
       title: "Grade Level",
@@ -56,7 +58,11 @@ const ApplyNow = () => {
           <div className="flex items-center justify-between h-20">
             {/* Logo Section */}
             <div className="flex items-center space-x-3">
-              <BookOpen className="h-8 w-8 text-prep-burgundy" />
+              <img 
+                src="/lovable-uploads/a3ae56ad-0489-450a-bea1-2f8cc7ecd47e.png" 
+                alt="SAYC Logo" 
+                className="h-8 w-8"
+              />
               <div className="flex flex-col">
                 <span className="text-2xl font-bold text-prep-burgundy font-gill-sans tracking-tight">SAYC</span>
                 <span className="text-xs text-prep-dark-gray font-gill-sans">Students Advocating for Young Children</span>
@@ -79,10 +85,7 @@ const ApplyNow = () => {
               </Link>
             </div>
 
-            {/* Mobile Menu Button */}
-            <div className="md:hidden">
-              <Menu className="h-6 w-6 text-prep-burgundy" />
-            </div>
+            <MobileNavigation currentPath={location.pathname} />
           </div>
         </div>
       </nav>
@@ -122,7 +125,7 @@ const ApplyNow = () => {
                 <Button 
                   variant="outline" 
                   className="w-full rounded-none bg-prep-white text-prep-burgundy border-prep-burgundy hover:bg-prep-burgundy hover:text-prep-white transition-colors text-lg py-3"
-                  onClick={() => window.open('#', '_blank')}
+                  onClick={() => window.open('https://docs.google.com/forms/d/e/1FAIpQLSdT5PI0AMyinzwJLPLqvLon7-zVpygKTDsxCaTT0T5FlGGnAw/viewform', '_blank')}
                 >
                   OPEN APPLICATION FORM
                 </Button>
