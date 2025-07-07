@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Phone, Mail, MapPin, Plus, Trash2, Hourglass } from "lucide-react";
+import { Phone, Mail, MapPin, Plus, Trash2, BookOpen, Hourglass } from "lucide-react";
 import MobileNavigation from "@/components/MobileNavigation";
 
 const Contact = () => {
