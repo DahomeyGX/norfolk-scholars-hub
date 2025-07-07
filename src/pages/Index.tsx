@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Calendar, Clock, MapPin, Users, BookOpen, Heart, Menu, ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
+import { Calendar, Clock, MapPin, Calculator, BookOpen, Heart, Menu, ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
 import { useState, useEffect } from "react";
 
 const Index = () => {
@@ -73,7 +73,11 @@ const Index = () => {
           <div className="flex items-center justify-between h-20">
             {/* Logo Section */}
             <div className="flex items-center space-x-3">
-              <BookOpen className="h-8 w-8 text-prep-burgundy" />
+              <img 
+                src="/uploads/a3ae56ad-0489-450a-bea1-2f8cc7ecd47e.png" 
+                alt="SAYC Logo" 
+                className="h-8 w-8"
+              />
               <div className="flex flex-col">
                 <span className="text-2xl font-bold text-prep-burgundy font-gill-sans tracking-tight">SAYC</span>
                 <span className="text-xs text-prep-dark-gray font-gill-sans">Students Advocating for Young Children</span>
@@ -225,7 +229,7 @@ const Index = () => {
             <Card className="border-none shadow-lg bg-prep-white hover:shadow-xl transition-shadow">
               <CardHeader className="text-center pb-4">
                 <div className="w-16 h-16 bg-prep-burgundy rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Users className="h-8 w-8 text-prep-white" />
+                  <Calculator className="h-8 w-8 text-prep-white" />
                 </div>
                 <CardTitle className="text-prep-burgundy font-gill-sans text-prep-heading">MATH TUTORING</CardTitle>
               </CardHeader>
@@ -373,13 +377,17 @@ const Index = () => {
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center">
             <div className="flex items-center justify-center space-x-3 mb-6">
-              <BookOpen className="h-8 w-8" />
+              <img 
+                src="/uploads/a3ae56ad-0489-450a-bea1-2f8cc7ecd47e.png" 
+                alt="SAYC Logo" 
+                className="h-8 w-8"
+              />
               <div className="flex flex-col">
                 <span className="text-2xl font-bold font-gill-sans">SAYC</span>
                 <span className="text-sm text-pumpkin font-gill-sans">Students Advocating for Young Children</span>
               </div>
             </div>
-            <div className="border-t border-purple pt-6">
+            <div className="border-t border-purple pt-6 text-center">
               <p className="text-pumpkin font-gill-sans text-prep-subheading-gill mb-2">
                 Serving the Lower East Side Community
               </p>
