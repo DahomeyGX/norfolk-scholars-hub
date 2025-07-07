@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Clock, Calendar, Users, Utensils, GamepadIcon, BookOpen } from "lucide-react";
+import { Clock, Calendar, Calculator, Utensils, GamepadIcon, BookOpen } from "lucide-react";
 import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import MobileNavigation from "@/components/MobileNavigation";
 
@@ -62,7 +62,7 @@ const Schedule = () => {
             {/* Logo Section */}
             <div className="flex items-center space-x-3">
               <img 
-                src="/lovable-uploads/a3ae56ad-0489-450a-bea1-2f8cc7ecd47e.png" 
+                src="/uploads/a3ae56ad-0489-450a-bea1-2f8cc7ecd47e.png" 
                 alt="SAYC Logo" 
                 className="h-8 w-8"
               />
@@ -125,7 +125,7 @@ const Schedule = () => {
                 </div>
               </div>
               <div className="flex items-center p-4 bg-prep-white rounded-lg border-l-4 border-khaki">
-                <Users className="h-5 w-5 text-prep-burgundy mr-4" />
+                <Calculator className="h-5 w-5 text-prep-burgundy mr-4" />
                 <div>
                   <span className="font-semibold text-prep-burgundy font-gill-sans text-prep-subheading-gill">11:30 AM - 1:00 PM</span>
                   <div className="text-prep-dark-gray font-garamond text-prep-body-garamond">Math Session</div>
@@ -172,7 +172,7 @@ const Schedule = () => {
                 </div>
               </div>
               <div className="flex items-center">
-                <Users className="h-5 w-5 mr-3 text-pumpkin" />
+                <Calculator className="h-5 w-5 mr-3 text-pumpkin" />
                 <div>
                   <span className="font-semibold text-prep-burgundy font-gill-sans text-prep-subheading-gill">Frequency:</span>
                   <span className="text-prep-dark-gray font-garamond text-prep-body-garamond ml-2">Every Saturday (excluding holidays)</span>

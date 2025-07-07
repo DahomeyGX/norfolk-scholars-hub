@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Phone, Mail, MapPin, Plus, Trash2, BookOpen } from "lucide-react";
+import { Phone, Mail, MapPin, Plus, Trash2, Hourglass } from "lucide-react";
 import MobileNavigation from "@/components/MobileNavigation";
 
 const Contact = () => {
@@ -41,7 +41,7 @@ const Contact = () => {
             {/* Logo Section */}
             <div className="flex items-center space-x-3">
               <img 
-                src="/lovable-uploads/a3ae56ad-0489-450a-bea1-2f8cc7ecd47e.png" 
+                src="/uploads/a3ae56ad-0489-450a-bea1-2f8cc7ecd47e.png" 
                 alt="SAYC Logo" 
                 className="h-8 w-8"
               />
@@ -102,7 +102,7 @@ const Contact = () => {
               </div>
               
               <div className="flex items-start space-x-3">
-                <BookOpen className="h-6 w-6 text-pumpkin mt-1" />
+                <Hourglass className="h-6 w-6 text-pumpkin mt-1" />
                 <div>
                   <h3 className="font-semibold text-prep-burgundy font-gill-sans text-prep-subheading-gill">PROGRAM HOURS</h3>
                   <p className="text-prep-dark-gray font-garamond text-prep-body-garamond">Saturdays: 11:00 AM - 3:00 PM<br />October - March<br />Excluding Holidays</p>
