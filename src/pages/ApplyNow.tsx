@@ -1,3 +1,4 @@
+
 import { Link, useLocation } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -59,7 +60,7 @@ const ApplyNow = () => {
             {/* Logo Section */}
             <div className="flex items-center space-x-3">
               <img 
-                src="/lovable-uploads/a3ae56ad-0489-450a-bea1-2f8cc7ecd47e.png" 
+                src="/lovable-uploads/5917bd92-cfe0-49da-b736-b58d3e8a1d57.png" 
                 alt="SAYC Logo" 
                 className="h-8 w-8"
               />

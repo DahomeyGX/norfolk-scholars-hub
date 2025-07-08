@@ -75,7 +75,7 @@ const Index = () => {
             {/* Logo Section */}
             <div className="flex items-center space-x-3">
               <img 
-                src="/uploads/SaycLogoTrans.png" 
+                src="/lovable-uploads/5917bd92-cfe0-49da-b736-b58d3e8a1d57.png" 
                 alt="SAYC Logo" 
                 className="h-8 w-8"
               />
@@ -379,7 +379,7 @@ const Index = () => {
           <div className="text-center">
             <div className="flex items-center justify-center space-x-3 mb-6">
               <img 
-                src="/uploads/SaycLogoTransWhite.png" 
+                src="/lovable-uploads/b2dd2e7f-8713-42d0-a780-8e8e8b9c6105.png" 
                 alt="SAYC Logo" 
                 className="h-8 w-8"
               />
