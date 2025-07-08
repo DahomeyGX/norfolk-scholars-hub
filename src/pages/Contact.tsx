@@ -41,7 +41,7 @@ const Contact = () => {
             {/* Logo Section */}
             <div className="flex items-center space-x-3">
               <img 
-                src="/uploads/a3ae56ad-0489-450a-bea1-2f8cc7ecd47e.png" 
+                src="/uploads/SaycLogoTrans.png" 
                 alt="SAYC Logo" 
                 className="h-8 w-8"
               />
