@@ -80,8 +80,8 @@ export default {
 				'dark-silver': '#5c5c5c'
 			},
 			fontFamily: {
-				'gill-sans': ['Gill Sans', 'Gill Sans MT', 'Trebuchet MS', 'sans-serif'],
-				'garamond': ['Garamond', 'Times New Roman', 'serif'],
+				'gill-sans': ['Lato', 'system-ui', 'sans-serif'],
+				'garamond': ['EB Garamond', 'Georgia', 'serif'],
 			},
 			fontSize: {
 				'prep-heading': ['24px', '1.2'],
