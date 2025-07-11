@@ -113,6 +113,27 @@ const ContactForm = () => {
         throw error;
       }
 
+      // Send email notification
+      try {
+        const { error: emailError } = await supabase.functions.invoke('send-contact-email', {
+          body: {
+            name: data.name,
+            email: data.email,
+            school: data.school,
+            how_heard: data.how_heard,
+            message: data.message,
+          },
+        });
+
+        if (emailError) {
+          console.warn('Email notification failed:', emailError);
+          // Don't fail the form submission if email fails
+        }
+      } catch (emailError) {
+        console.warn('Email notification error:', emailError);
+        // Don't fail the form submission if email fails
+      }
+
       toast({
         title: "Message sent successfully!",
         description: "Thank you for contacting us. We'll get back to you soon.",
@@ -276,7 +297,7 @@ const ContactForm = () => {
             <Button 
               type="submit" 
               disabled={isSubmitting}
-              className="w-full bg-prep-burgundy hover:bg-pumpkin text-prep-white font-lato text-prep-subheading-gill py-3 transition-colors"
+              className="w-full"
             >
               {isSubmitting ? (
                 <>
