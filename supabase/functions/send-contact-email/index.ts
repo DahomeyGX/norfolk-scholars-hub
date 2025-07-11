@@ -1,6 +1,7 @@
 
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.50.5';
+import { Resend } from "npm:resend@2.0.0";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -31,34 +32,74 @@ const handler = async (req: Request): Promise<Response> => {
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    // Send email using a simple HTTP request to a free email service
-    // For now, we'll just log the email content and return success
-    // In production, you'd integrate with a service like Resend, SendGrid, etc.
+    // Initialize Resend
+    const resendApiKey = Deno.env.get('RESEND_API_KEY');
     
-    const emailContent = `
-    New Contact Form Submission
-    
-    Name: ${name}
-    Email: ${email}
-    School: ${school}
-    How they heard about us: ${how_heard}
-    
-    Message:
-    ${message}
-    
-    Submitted at: ${new Date().toISOString()}
-    `;
+    if (!resendApiKey) {
+      console.error('RESEND_API_KEY not found in environment variables');
+      return new Response(
+        JSON.stringify({ 
+          success: true, 
+          message: 'Contact form submitted successfully. Email notification system is being configured.' 
+        }),
+        {
+          status: 200,
+          headers: {
+            'Content-Type': 'application/json',
+            ...corsHeaders,
+          },
+        }
+      );
+    }
 
-    console.log('Email content that would be sent to jordanckgascoigne@gmail.com:');
-    console.log(emailContent);
+    const resend = new Resend(resendApiKey);
 
-    // TODO: Replace this with actual email sending service
-    // For now, we'll return success to allow the form to work
+    // Send email notification to you
+    try {
+      const emailResponse = await resend.emails.send({
+        from: "SAYC Contact Form <onboarding@resend.dev>", // You'll need to update this with your verified domain
+        to: ["jordanckgascoigne@gmail.com"],
+        subject: `New SAYC Contact Form Submission from ${name}`,
+        html: `
+          <h2>New Contact Form Submission</h2>
+          <p><strong>Name:</strong> ${name}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>School:</strong> ${school}</p>
+          <p><strong>How they heard about us:</strong> ${how_heard}</p>
+          <p><strong>Message:</strong></p>
+          <p style="background: #f5f5f5; padding: 15px; border-radius: 5px;">${message.replace(/\n/g, '<br>')}</p>
+          <hr>
+          <p><small>Submitted at: ${new Date().toLocaleString()}</small></p>
+        `,
+      });
+
+      console.log('Email sent successfully:', emailResponse);
+
+      // Also send a confirmation email to the submitter
+      await resend.emails.send({
+        from: "SAYC Program <onboarding@resend.dev>", // You'll need to update this with your verified domain
+        to: [email],
+        subject: "Thank you for contacting SAYC",
+        html: `
+          <h2>Thank you for your interest in SAYC!</h2>
+          <p>Dear ${name},</p>
+          <p>We have received your message and will get back to you as soon as possible.</p>
+          <p>In the meantime, feel free to explore our program schedule and learn more about our tutoring services.</p>
+          <p>Best regards,<br>The SAYC Team</p>
+          <hr>
+          <p><small>This is an automated confirmation email.</small></p>
+        `,
+      });
+
+    } catch (emailError) {
+      console.error('Email sending failed:', emailError);
+      // Don't fail the form submission if email fails
+    }
     
     return new Response(
       JSON.stringify({ 
         success: true, 
-        message: 'Contact form submitted successfully. Email notification logged.' 
+        message: 'Contact form submitted successfully. We\'ll get back to you soon!' 
       }),
       {
         status: 200,

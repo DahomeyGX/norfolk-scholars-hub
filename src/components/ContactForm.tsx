@@ -160,7 +160,7 @@ const ContactForm = () => {
   return (
     <Card className="border-none shadow-lg bg-prep-white">
       <CardHeader>
-        <CardTitle className="text-prep-burgundy font-lato text-prep-heading">GET IN TOUCH</CardTitle>
+        <CardTitle className="text-prep-burgundy font-lato text-prep-heading">CONTACT FORM</CardTitle>
         <CardDescription className="text-prep-dark-gray font-eb-garamond text-prep-body-garamond">
           Fill out the form below and we'll get back to you as soon as possible
         </CardDescription>
