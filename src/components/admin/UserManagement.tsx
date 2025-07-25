@@ -15,18 +15,28 @@ const UserManagement = () => {
   const { data: users, isLoading } = useQuery({
     queryKey: ['users'],
     queryFn: async () => {
-      const { data, error } = await supabase
+      // First get all profiles
+      const { data: profiles, error: profilesError } = await supabase
         .from('profiles')
-        .select(`
-          *,
-          user_roles (
-            role
-          )
-        `)
+        .select('*')
         .order('created_at', { ascending: false });
       
-      if (error) throw error;
-      return data;
+      if (profilesError) throw profilesError;
+      
+      // Then get all user roles
+      const { data: userRoles, error: rolesError } = await supabase
+        .from('user_roles')
+        .select('*');
+      
+      if (rolesError) throw rolesError;
+      
+      // Combine the data
+      const usersWithRoles = profiles?.map(profile => ({
+        ...profile,
+        roles: userRoles?.filter(role => role.user_id === profile.id) || []
+      })) || [];
+      
+      return usersWithRoles;
     },
   });
 
@@ -72,7 +82,7 @@ const UserManagement = () => {
         <CardContent>
           <div className="space-y-4">
             {users?.map((user) => {
-              const isAdmin = user.user_roles?.some(role => role.role === 'admin');
+              const isAdmin = user.roles?.some(role => role.role === 'admin');
               
               return (
                 <Card key={user.id} className="border-l-4 border-l-prep-burgundy">
