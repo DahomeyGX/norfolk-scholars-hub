@@ -2,6 +2,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
+import { useAuth } from '@/hooks/useAuth';
+import AuthButton from './AuthButton';
 
 interface MobileNavigationProps {
   currentPath: string;
@@ -9,6 +11,7 @@ interface MobileNavigationProps {
 
 const MobileNavigation = ({ currentPath }: MobileNavigationProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const { user } = useAuth();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -71,6 +74,9 @@ const MobileNavigation = ({ currentPath }: MobileNavigationProps) => {
               >
                 CONTACT
               </Link>
+              <div className="pt-4 border-t border-warm-gray-light">
+                <AuthButton />
+              </div>
             </div>
           </div>
         </div>
