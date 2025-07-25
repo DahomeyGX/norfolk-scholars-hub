@@ -297,6 +297,7 @@ const ContactForm = () => {
             <Button 
               type="submit" 
               disabled={isSubmitting}
+              variant="outline"
               className="w-full"
             >
               {isSubmitting ? (

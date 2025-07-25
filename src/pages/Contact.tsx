@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -166,18 +165,10 @@ const Contact = () => {
               </CardContent>
             </Card>
 
-            {/* How to Reach Us with Contact Form */}
-            <Card className="border-none shadow-lg bg-prep-white">
-              <CardHeader>
-                <CardTitle className="text-prep-burgundy font-lato text-prep-heading">HOW TO REACH US</CardTitle>
-                <CardDescription className="text-prep-dark-gray font-eb-garamond text-prep-body-garamond">
-                  Get in touch with our program coordinators
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <ContactForm />
-              </CardContent>
-            </Card>
+            {/* Contact Form - removed the wrapper card */}
+            <div>
+              <ContactForm />
+            </div>
           </div>
         </div>
       </div>
