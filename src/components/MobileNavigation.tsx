@@ -11,7 +11,7 @@ interface MobileNavigationProps {
 
 const MobileNavigation = ({ currentPath }: MobileNavigationProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const { user } = useAuth();
+  const { user, isAdmin } = useAuth();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
