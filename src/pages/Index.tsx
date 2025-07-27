@@ -1,9 +1,10 @@
-
 import { Link } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Calendar, Clock, MapPin, Calculator, BookOpen, Heart, Menu, ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
 import { useState, useEffect } from "react";
+import MobileNavigation from "@/components/MobileNavigation";
+import AuthButton from "@/components/AuthButton";
 
 const Index = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -72,18 +73,18 @@ const Index = () => {
       <nav className="fixed top-0 left-0 right-0 bg-prep-white shadow-md z-50 border-b border-warm-gray-light">
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex items-center justify-between h-20">
-            {/* Logo Section */}
-            <div className="flex items-center space-x-3">
+            {/* Logo Section - Made clickable for sneaky auth access */}
+            <Link to="/auth" className="flex items-center space-x-3 group">
               <img 
                 src="/lovable-uploads/b2dd2e7f-8713-42d0-a780-8e8e8b9c6105.png" 
                 alt="SAYC Logo" 
-                className="h-10 w-10"
+                className="h-10 w-10 transition-transform group-hover:scale-105"
               />
               <div className="flex flex-col">
                 <span className="text-2xl font-bold text-prep-burgundy font-gill-sans tracking-tight">SAYC</span>
                 <span className="text-xs text-prep-dark-gray font-gill-sans">Students Advocating for Young Children</span>
               </div>
-            </div>
+            </Link>
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-8">
@@ -99,12 +100,11 @@ const Index = () => {
               <Link to="/contact" className="text-prep-dark-gray text-prep-subheading-gill hover:text-prep-burgundy transition-colors">
                 CONTACT
               </Link>
+              <AuthButton />
             </div>
 
-            {/* Mobile Menu Button */}
-            <div className="md:hidden">
-              <Menu className="h-6 w-6 text-prep-burgundy" />
-            </div>
+            {/* Mobile Navigation */}
+            <MobileNavigation currentPath="/" />
           </div>
         </div>
       </nav>
