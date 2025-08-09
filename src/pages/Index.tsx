@@ -72,19 +72,19 @@ const Index = () => {
     <>
       <Helmet>
         <title>SAYC - Students Advocating for Young Children | Free Tutoring NYC</title>
-        <meta name="description" content="SAYC offers free academic enrichment for rising 5th grade students of color in NYC. Saturday tutoring program in Math and English at Lower East Side. Led by Prep for Prep volunteers." />
-        <meta name="keywords" content="SAYC, Students Advocating for Young Children, free tutoring NYC, academic enrichment, 5th grade students, Lower East Side, Prep for Prep, Saturday tutoring" />
+        <meta name="description" content="SAYC offers free academic enrichment for rising 5th grade students from diverse backgrounds in NYC. Saturday tutoring program in Math and English at Lower East Side. Led by Prep for Prep volunteers." />
+        <meta name="keywords" content="SAYC, Students Advocating for Young Children, free tutoring NYC, academic enrichment, 5th grade students, Lower East Side, Prep for Prep, Saturday tutoring, diverse students, underrepresented youth" />
         
         {/* Open Graph tags for social media */}
         <meta property="og:title" content="SAYC - Students Advocating for Young Children | Free Tutoring NYC" />
-        <meta property="og:description" content="Free academic enrichment for rising 5th grade students of color in NYC. Saturday tutoring program in Math and English at Lower East Side." />
+        <meta property="og:description" content="Free academic enrichment for rising 5th grade students from diverse backgrounds in NYC. Saturday tutoring program in Math and English at Lower East Side." />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://sayc-program.com" />
         
         {/* Twitter Card tags */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="SAYC - Students Advocating for Young Children | Free Tutoring NYC" />
-        <meta name="twitter:description" content="Free academic enrichment for rising 5th grade students of color in NYC. Saturday tutoring program in Math and English." />
+        <meta name="twitter:description" content="Free academic enrichment for rising 5th grade students from diverse backgrounds in NYC. Saturday tutoring program in Math and English." />
         
         {/* Canonical URL */}
         <link rel="canonical" href="https://sayc-program.com" />
@@ -248,7 +248,7 @@ const Index = () => {
                 WHAT WE DO
               </h2>
               <p className="text-xl text-prep-dark-gray max-w-3xl mx-auto font-garamond text-prep-subheading-garamond">
-                Students Advocating for Young Children (SAYC) is a free enrichment program for rising 5th grade public school students of color from low- to moderate-income families. Led by Prep for Prep high school volunteers, SAYC offers engaging learning in ELA and Math!
+                Students Advocating for Young Children (SAYC) is a free enrichment program for rising 5th grade public school students from diverse backgrounds and low- to moderate-income families. Led by Prep for Prep high school volunteers, SAYC offers engaging learning in ELA and Math!
               </p>
             </div>
             
@@ -309,13 +309,13 @@ const Index = () => {
             <div className="bg-light-tan p-8 md:p-12 shadow-lg">
               <div className="prose prose-lg mx-auto text-prep-dark-gray">
                 <p className="text-lg leading-relaxed mb-6 font-garamond text-prep-subheading-garamond">
-                  SAYC (Students Advocating for Young Children) was born from a simple belief: every child deserves access to quality education, regardless of their family's financial circumstances. Located in the heart of the Lower East Side at 111 Norfolk Street, our program has been serving students of color from low- to moderate-income families with free enrichment services.
+                  SAYC (Students Advocating for Young Children) was born from a simple belief: every child deserves access to quality education, regardless of their family's financial circumstances. Located in the heart of the Lower East Side at 111 Norfolk Street, our program has been serving students from diverse communities and low- to moderate-income families with free enrichment services.
                 </p>
                 <p className="text-lg leading-relaxed mb-6 font-garamond text-prep-subheading-garamond">
-                  Our dedicated volunteers, many of whom are students themselves, understand the challenges young learners face. We've created a warm, welcoming environment where children can thrive academically while building lasting friendships and confidence.
+                  Our dedicated volunteers, many of whom are students themselves, understand the challenges young learners face from underrepresented backgrounds. We've created a warm, welcoming environment where children can thrive academically while building lasting friendships and confidence.
                 </p>
                 <p className="text-lg leading-relaxed font-garamond text-prep-subheading-garamond">
-                  Every Saturday from October to March, we open our doors to provide structured learning sessions that combine academic excellence with fun activities, ensuring that education is both effective and enjoyable.
+                  Every Saturday from October to March, we open our doors to provide structured learning sessions that combine academic excellence with fun activities, ensuring that education is both effective and enjoyable for students from all walks of life.
                 </p>
               </div>
             </div>
@@ -347,7 +347,7 @@ const Index = () => {
                   <div>
                     <h3 className="text-2xl font-bold text-prep-burgundy mb-4 font-gill-sans">About Prep for Prep</h3>
                     <p className="text-prep-dark-gray font-garamond text-prep-body-garamond leading-relaxed">
-                      Prep for Prep is a leadership development and educational access program that supports high-achieving students of color from low- to moderate-income backgrounds. Founded in 1978, it prepares students for placement at top independent day and boarding schools in the Northeast.
+                      Prep for Prep is a leadership development and educational access program that supports high-achieving students from diverse backgrounds and low- to moderate-income families. Founded in 1978, it prepares students for placement at top independent day and boarding schools in the Northeast.
                     </p>
                   </div>
                   
