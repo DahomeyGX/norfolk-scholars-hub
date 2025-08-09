@@ -1,3 +1,4 @@
+
 import { Link, useLocation } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -18,7 +19,7 @@ const ApplyNow = () => {
     },
     {
       title: "Background",
-      description: "Must be a student of color."
+      description: "Must be a student from a diverse background who would benefit from enrichment opportunities."
     },
     {
       title: "Family Income",
@@ -97,7 +98,7 @@ const ApplyNow = () => {
             APPLY NOW
           </h1>
           <p className="text-xl text-prep-dark-gray max-w-3xl mx-auto font-garamond text-prep-subheading-garamond">
-            Join our free enrichment program for rising 5th grade public school students of color from low- to moderate-income families
+            Join our free enrichment program for rising 5th grade public school students from diverse backgrounds and low- to moderate-income families
           </p>
         </div>
 
@@ -145,7 +146,7 @@ const ApplyNow = () => {
               <div className="bg-light-tan p-6 rounded-lg">
                 <h3 className="font-semibold text-prep-burgundy mb-3 font-gill-sans text-prep-subheading-gill">Our Mission</h3>
                 <p className="text-prep-dark-gray font-garamond text-prep-body-garamond leading-relaxed">
-                  Students Advocating for Young Children (SAYC) is a free enrichment program for rising 5th grade public school students of color from low- to moderate-income families. Led by Prep for Prep high school volunteers, SAYC offers engaging learning in ELA and Math!
+                  Students Advocating for Young Children (SAYC) is a free enrichment program for rising 5th grade public school students from diverse communities and low- to moderate-income families. Led by Prep for Prep high school volunteers, SAYC offers engaging learning in ELA and Math!
                 </p>
               </div>
               
