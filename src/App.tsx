@@ -13,6 +13,7 @@ import Contact from "./pages/Contact";
 import ApplyNow from "./pages/ApplyNow";
 import Auth from "./pages/Auth";
 import AdminDashboard from "./pages/AdminDashboard";
+import VolunteerDashboard from "./pages/VolunteerDashboard";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -36,6 +37,14 @@ const App = () => (
                 element={
                   <ProtectedRoute requireAdmin>
                     <AdminDashboard />
+                  </ProtectedRoute>
+                } 
+              />
+              <Route 
+                path="/volunteer" 
+                element={
+                  <ProtectedRoute requireVolunteer>
+                    <VolunteerDashboard />
                   </ProtectedRoute>
                 } 
               />

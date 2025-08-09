@@ -1,20 +1,75 @@
 
 import { useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import ContactSubmissions from '@/components/admin/ContactSubmissions';
 import UserManagement from '@/components/admin/UserManagement';
-import { Users, MessageSquare, Settings, LogOut } from 'lucide-react';
+import { Users, MessageSquare, Settings, LogOut, Calendar, CheckCircle, XCircle, HelpCircle } from 'lucide-react';
+import { format, parseISO } from 'date-fns';
 
 const AdminDashboard = () => {
   const { user, signOut } = useAuth();
   const [activeTab, setActiveTab] = useState('overview');
 
+  // Fetch volunteer counts
+  const { data: volunteerStats } = useQuery({
+    queryKey: ['volunteer-stats'],
+    queryFn: async () => {
+      const { data: roles } = await supabase
+        .from('user_roles')
+        .select('role')
+        .in('role', ['volunteer_math', 'volunteer_ela', 'volunteer_adlo']);
+      
+      const mathVolunteers = roles?.filter(r => r.role === 'volunteer_math').length || 0;
+      const elaVolunteers = roles?.filter(r => r.role === 'volunteer_ela').length || 0;
+      const adloVolunteers = roles?.filter(r => r.role === 'volunteer_adlo').length || 0;
+      
+      return {
+        math: mathVolunteers,
+        ela: elaVolunteers,
+        adlo: adloVolunteers,
+        total: mathVolunteers + elaVolunteers + adloVolunteers
+      };
+    },
+  });
+
+  // Fetch upcoming sessions with volunteer response counts
+  const { data: upcomingSessions } = useQuery({
+    queryKey: ['upcoming-sessions-admin'],
+    queryFn: async () => {
+      const today = new Date().toISOString().split('T')[0];
+      
+      const { data: sessions } = await supabase
+        .from('scheduled_sessions')
+        .select(`
+          *,
+          volunteer_availability(*)
+        `)
+        .gte('session_date', today)
+        .order('session_date', { ascending: true })
+        .limit(5);
+      
+      return sessions;
+    },
+  });
+
   const handleSignOut = async () => {
     await signOut();
+  };
+
+  const getResponseCounts = (session: any) => {
+    const responses = session.volunteer_availability || [];
+    return {
+      attending: responses.filter((r: any) => r.status === 'attending').length,
+      maybe: responses.filter((r: any) => r.status === 'maybe').length,
+      notAttending: responses.filter((r: any) => r.status === 'not_attending').length,
+      total: responses.length
+    };
   };
 
   return (
@@ -23,7 +78,7 @@ const AdminDashboard = () => {
       <div className="bg-prep-burgundy text-prep-white p-4">
         <div className="container mx-auto flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold font-lato">SAYC Admin Dashboard</h1>
+            <h1 className="text-2xl font-bold font-gill-sans">SAYC Admin Dashboard</h1>
             <p className="text-prep-white/80">Welcome back, {user?.email}</p>
           </div>
           <Button
@@ -39,8 +94,9 @@ const AdminDashboard = () => {
 
       <div className="container mx-auto px-4 py-8">
         <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="grid w-full grid-cols-3">
+          <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="overview">Overview</TabsTrigger>
+            <TabsTrigger value="volunteers">Volunteers</TabsTrigger>
             <TabsTrigger value="contacts">Contact Forms</TabsTrigger>
             <TabsTrigger value="users">User Management</TabsTrigger>
           </TabsList>
@@ -49,12 +105,12 @@ const AdminDashboard = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">Total Users</CardTitle>
+                  <CardTitle className="text-sm font-medium">Total Volunteers</CardTitle>
                   <Users className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold">--</div>
-                  <p className="text-xs text-muted-foreground">Registered users</p>
+                  <div className="text-2xl font-bold">{volunteerStats?.total || 0}</div>
+                  <p className="text-xs text-muted-foreground">Active volunteers</p>
                 </CardContent>
               </Card>
 
@@ -89,7 +145,14 @@ const AdminDashboard = () => {
                 <CardDescription>Common administrative tasks</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <Button
+                    onClick={() => setActiveTab('volunteers')}
+                    className="bg-prep-burgundy hover:bg-prep-burgundy/90 text-prep-white"
+                  >
+                    <Users className="mr-2 h-4 w-4" />
+                    View Volunteer Status
+                  </Button>
                   <Button
                     onClick={() => setActiveTab('contacts')}
                     className="bg-prep-burgundy hover:bg-prep-burgundy/90 text-prep-white"
@@ -101,9 +164,95 @@ const AdminDashboard = () => {
                     onClick={() => setActiveTab('users')}
                     className="bg-prep-burgundy hover:bg-prep-burgundy/90 text-prep-white"
                   >
-                    <Users className="mr-2 h-4 w-4" />
+                    <Settings className="mr-2 h-4 w-4" />
                     Manage Users
                   </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="volunteers" className="space-y-6">
+            {/* Volunteer Statistics */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              <Card>
+                <CardContent className="p-4">
+                  <div className="text-2xl font-bold text-blue-600">{volunteerStats?.math || 0}</div>
+                  <p className="text-sm text-prep-dark-gray">Math Volunteers</p>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardContent className="p-4">
+                  <div className="text-2xl font-bold text-green-600">{volunteerStats?.ela || 0}</div>
+                  <p className="text-sm text-prep-dark-gray">ELA Volunteers</p>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardContent className="p-4">
+                  <div className="text-2xl font-bold text-purple-600">{volunteerStats?.adlo || 0}</div>
+                  <p className="text-sm text-prep-dark-gray">ADLO Volunteers</p>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardContent className="p-4">
+                  <div className="text-2xl font-bold text-prep-burgundy">{volunteerStats?.total || 0}</div>
+                  <p className="text-sm text-prep-dark-gray">Total Volunteers</p>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Upcoming Sessions */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-prep-burgundy flex items-center">
+                  <Calendar className="h-5 w-5 mr-2" />
+                  Upcoming Session Volunteer Status
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {upcomingSessions?.map((session) => {
+                    const counts = getResponseCounts(session);
+                    
+                    return (
+                      <Card key={session.id} className="border-l-4 border-l-prep-burgundy">
+                        <CardContent className="p-4">
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <h3 className="font-semibold text-prep-burgundy">
+                                {format(parseISO(session.session_date), 'EEEE, MMMM d, yyyy')}
+                              </h3>
+                              <p className="text-sm text-prep-dark-gray">{session.session_time} - {session.session_end_time}</p>
+                            </div>
+                            
+                            <div className="flex items-center gap-4">
+                              <div className="flex items-center gap-2">
+                                <CheckCircle className="h-4 w-4 text-green-600" />
+                                <span className="text-sm font-medium">{counts.attending}</span>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <HelpCircle className="h-4 w-4 text-yellow-600" />
+                                <span className="text-sm font-medium">{counts.maybe}</span>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <XCircle className="h-4 w-4 text-red-600" />
+                                <span className="text-sm font-medium">{counts.notAttending}</span>
+                              </div>
+                              <div className="text-sm text-prep-dark-gray">
+                                {counts.total} total responses
+                              </div>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    );
+                  })}
+                  
+                  {(!upcomingSessions || upcomingSessions.length === 0) && (
+                    <div className="text-center py-8 text-prep-dark-gray">
+                      No upcoming sessions found.
+                    </div>
+                  )}
                 </div>
               </CardContent>
             </Card>

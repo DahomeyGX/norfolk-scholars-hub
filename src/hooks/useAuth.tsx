@@ -8,6 +8,8 @@ interface AuthContextType {
   session: Session | null;
   isLoading: boolean;
   isAdmin: boolean;
+  isVolunteer: boolean;
+  volunteerType: string | null;
   signIn: (email: string, password: string) => Promise<{ error: any }>;
   signOut: () => Promise<void>;
 }
@@ -19,6 +21,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [session, setSession] = useState<Session | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isVolunteer, setIsVolunteer] = useState(false);
+  const [volunteerType, setVolunteerType] = useState<string | null>(null);
 
   useEffect(() => {
     // Set up auth state listener
@@ -28,7 +32,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setSession(session);
         setUser(session?.user ?? null);
         
-        // Check admin role when user logs in
+        // Check roles when user logs in
         if (session?.user) {
           setTimeout(async () => {
             try {
@@ -37,14 +41,33 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
                 .select('role')
                 .eq('user_id', session.user.id);
               
-              setIsAdmin(roles?.some(r => r.role === 'admin') || false);
+              const userRoles = roles?.map(r => r.role) || [];
+              
+              setIsAdmin(userRoles.includes('admin'));
+              
+              const volunteerRoles = userRoles.filter(role => 
+                role.startsWith('volunteer_')
+              );
+              
+              if (volunteerRoles.length > 0) {
+                setIsVolunteer(true);
+                setVolunteerType(volunteerRoles[0].replace('volunteer_', ''));
+              } else {
+                setIsVolunteer(false);
+                setVolunteerType(null);
+              }
+              
             } catch (error) {
-              console.error('Error checking admin role:', error);
+              console.error('Error checking user roles:', error);
               setIsAdmin(false);
+              setIsVolunteer(false);
+              setVolunteerType(null);
             }
           }, 0);
         } else {
           setIsAdmin(false);
+          setIsVolunteer(false);
+          setVolunteerType(null);
         }
         
         setIsLoading(false);
@@ -79,6 +102,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       session,
       isLoading,
       isAdmin,
+      isVolunteer,
+      volunteerType,
       signIn,
       signOut,
     }}>
