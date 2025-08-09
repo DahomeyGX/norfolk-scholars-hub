@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
@@ -7,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Info } from 'lucide-react';
 
 const Auth = () => {
   const [email, setEmail] = useState('');
@@ -55,11 +54,27 @@ const Auth = () => {
   return (
     <div className="min-h-screen bg-prep-white py-16">
       <div className="container mx-auto px-4">
-        <div className="max-w-md mx-auto">
+        <div className="max-w-md mx-auto space-y-6">
+          {/* Info message for applicants */}
+          <div className="bg-light-tan border border-prep-gold p-4 rounded-lg">
+            <div className="flex items-start space-x-3">
+              <Info className="h-5 w-5 text-prep-burgundy flex-shrink-0 mt-0.5" />
+              <div>
+                <h3 className="font-semibold text-prep-burgundy font-gill-sans">
+                  Looking to apply?
+                </h3>
+                <p className="text-sm text-prep-dark-gray font-garamond mt-1">
+                  You don't need to sign in to apply! This login is only for SAYC staff and volunteers. 
+                  Visit our <a href="/apply" className="text-prep-burgundy hover:underline font-semibold">Apply page</a> to submit your application.
+                </p>
+              </div>
+            </div>
+          </div>
+
           <Card>
             <CardHeader>
               <CardTitle className="text-prep-burgundy font-lato text-2xl text-center">
-                Admin Sign In
+                Staff & Volunteer Sign In
               </CardTitle>
               <CardDescription className="text-center text-prep-dark-gray">
                 Sign in to access the admin panel
