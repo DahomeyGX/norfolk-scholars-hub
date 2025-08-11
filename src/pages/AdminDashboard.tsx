@@ -43,10 +43,15 @@ const AdminDashboard = () => {
     queryFn: async () => {
       const today = new Date().toISOString().split('T')[0];
       
-      const { data: sessions } = await supabase
+      const { data: sessions, error } = await (supabase as any)
         .rpc('get_sessions_with_availability', { from_date: today });
       
-      return sessions;
+      if (error) {
+        console.error('Error fetching sessions:', error);
+        return [];
+      }
+      
+      return sessions || [];
     },
   });
 
@@ -55,7 +60,7 @@ const AdminDashboard = () => {
   };
 
   const getResponseCounts = (session: any) => {
-    const responses = session.volunteer_availability || [];
+    const responses = Array.isArray(session.volunteer_availability) ? session.volunteer_availability : [];
     return {
       attending: responses.filter((r: any) => r.status === 'attending').length,
       maybe: responses.filter((r: any) => r.status === 'maybe').length,
@@ -203,7 +208,7 @@ const AdminDashboard = () => {
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {upcomingSessions?.map((session: any) => {
+                  {Array.isArray(upcomingSessions) && upcomingSessions.map((session: any) => {
                     const counts = getResponseCounts(session);
                     
                     return (
@@ -240,7 +245,7 @@ const AdminDashboard = () => {
                     );
                   })}
                   
-                  {(!upcomingSessions || upcomingSessions.length === 0) && (
+                  {(!upcomingSessions || (Array.isArray(upcomingSessions) && upcomingSessions.length === 0)) && (
                     <div className="text-center py-8 text-prep-dark-gray">
                       No upcoming sessions found.
                     </div>

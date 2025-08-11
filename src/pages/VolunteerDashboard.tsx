@@ -22,11 +22,14 @@ const VolunteerDashboard = () => {
   const { data: sessions, isLoading: sessionsLoading } = useQuery({
     queryKey: ['scheduled-sessions'],
     queryFn: async () => {
-      const { data, error } = await supabase
+      const { data, error } = await (supabase as any)
         .rpc('get_scheduled_sessions');
       
-      if (error) throw error;
-      return data;
+      if (error) {
+        console.error('Error fetching sessions:', error);
+        return [];
+      }
+      return data || [];
     },
   });
 
@@ -36,11 +39,14 @@ const VolunteerDashboard = () => {
     queryFn: async () => {
       if (!user?.id) return [];
       
-      const { data, error } = await supabase
+      const { data, error } = await (supabase as any)
         .rpc('get_volunteer_availability', { volunteer_user_id: user.id });
       
-      if (error) throw error;
-      return data;
+      if (error) {
+        console.error('Error fetching availability:', error);
+        return [];
+      }
+      return data || [];
     },
     enabled: !!user?.id,
   });
@@ -48,7 +54,7 @@ const VolunteerDashboard = () => {
   // Update availability mutation using RPC call
   const updateAvailabilityMutation = useMutation({
     mutationFn: async ({ sessionId, status, notes }: { sessionId: string; status: string; notes?: string }) => {
-      const { data, error } = await supabase
+      const { data, error } = await (supabase as any)
         .rpc('upsert_volunteer_availability', {
           volunteer_user_id: user?.id!,
           session_uuid: sessionId,
@@ -82,7 +88,8 @@ const VolunteerDashboard = () => {
   };
 
   const getAvailabilityForSession = (sessionId: string) => {
-    return availability?.find((a: any) => a.session_id === sessionId);
+    if (!Array.isArray(availability)) return null;
+    return availability.find((a: any) => a.session_id === sessionId);
   };
 
   const getStatusIcon = (status: string) => {
@@ -155,7 +162,7 @@ const VolunteerDashboard = () => {
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {sessions?.map((session: any) => {
+                  {Array.isArray(sessions) && sessions.map((session: any) => {
                     const sessionAvailability = getAvailabilityForSession(session.id);
                     const isPastSession = parseISO(session.session_date) < new Date();
                     

@@ -45,22 +45,14 @@ const UserManagement = () => {
 
   const updateRoleMutation = useMutation({
     mutationFn: async ({ userId, newRole }: { userId: string; newRole: string }) => {
-      // First remove all existing roles for this user
-      const { error: deleteError } = await supabase
-        .from('user_roles')
-        .delete()
-        .eq('user_id', userId);
-      
-      if (deleteError) throw deleteError;
-      
-      // Add the new role using RPC call to handle type casting
-      const { error: insertError } = await supabase
+      // Use RPC call to handle role updates
+      const { error } = await (supabase as any)
         .rpc('update_user_role', { 
           target_user_id: userId, 
           new_role: newRole 
         });
       
-      if (insertError) throw insertError;
+      if (error) throw error;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['users'] });
