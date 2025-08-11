@@ -22,12 +22,11 @@ const AdminDashboard = () => {
     queryFn: async () => {
       const { data: roles } = await supabase
         .from('user_roles')
-        .select('role')
-        .in('role', ['volunteer_math', 'volunteer_ela', 'volunteer_adlo']);
+        .select('role');
       
-      const mathVolunteers = roles?.filter(r => r.role === 'volunteer_math').length || 0;
-      const elaVolunteers = roles?.filter(r => r.role === 'volunteer_ela').length || 0;
-      const adloVolunteers = roles?.filter(r => r.role === 'volunteer_adlo').length || 0;
+      const mathVolunteers = roles?.filter((r: any) => r.role === 'volunteer_math').length || 0;
+      const elaVolunteers = roles?.filter((r: any) => r.role === 'volunteer_ela').length || 0;
+      const adloVolunteers = roles?.filter((r: any) => r.role === 'volunteer_adlo').length || 0;
       
       return {
         math: mathVolunteers,
@@ -45,14 +44,7 @@ const AdminDashboard = () => {
       const today = new Date().toISOString().split('T')[0];
       
       const { data: sessions } = await supabase
-        .from('scheduled_sessions')
-        .select(`
-          *,
-          volunteer_availability(*)
-        `)
-        .gte('session_date', today)
-        .order('session_date', { ascending: true })
-        .limit(5);
+        .rpc('get_sessions_with_availability', { from_date: today });
       
       return sessions;
     },
@@ -211,7 +203,7 @@ const AdminDashboard = () => {
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {upcomingSessions?.map((session) => {
+                  {upcomingSessions?.map((session: any) => {
                     const counts = getResponseCounts(session);
                     
                     return (

@@ -18,30 +18,26 @@ const VolunteerDashboard = () => {
   const [selectedSession, setSelectedSession] = useState<string | null>(null);
   const [notes, setNotes] = useState('');
 
-  // Fetch scheduled sessions
+  // Fetch scheduled sessions using RPC call
   const { data: sessions, isLoading: sessionsLoading } = useQuery({
     queryKey: ['scheduled-sessions'],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from('scheduled_sessions')
-        .select('*')
-        .order('session_date', { ascending: true });
+        .rpc('get_scheduled_sessions');
       
       if (error) throw error;
       return data;
     },
   });
 
-  // Fetch volunteer's availability responses
+  // Fetch volunteer's availability responses using RPC call
   const { data: availability } = useQuery({
     queryKey: ['volunteer-availability', user?.id],
     queryFn: async () => {
       if (!user?.id) return [];
       
       const { data, error } = await supabase
-        .from('volunteer_availability')
-        .select('*')
-        .eq('volunteer_id', user.id);
+        .rpc('get_volunteer_availability', { volunteer_user_id: user.id });
       
       if (error) throw error;
       return data;
@@ -49,16 +45,15 @@ const VolunteerDashboard = () => {
     enabled: !!user?.id,
   });
 
-  // Update availability mutation
+  // Update availability mutation using RPC call
   const updateAvailabilityMutation = useMutation({
     mutationFn: async ({ sessionId, status, notes }: { sessionId: string; status: string; notes?: string }) => {
       const { data, error } = await supabase
-        .from('volunteer_availability')
-        .upsert({
-          volunteer_id: user?.id!,
-          session_id: sessionId,
-          status,
-          notes: notes || null,
+        .rpc('upsert_volunteer_availability', {
+          volunteer_user_id: user?.id!,
+          session_uuid: sessionId,
+          availability_status: status,
+          availability_notes: notes || null,
         });
       
       if (error) throw error;
@@ -87,7 +82,7 @@ const VolunteerDashboard = () => {
   };
 
   const getAvailabilityForSession = (sessionId: string) => {
-    return availability?.find(a => a.session_id === sessionId);
+    return availability?.find((a: any) => a.session_id === sessionId);
   };
 
   const getStatusIcon = (status: string) => {
@@ -160,7 +155,7 @@ const VolunteerDashboard = () => {
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {sessions?.map((session) => {
+                  {sessions?.map((session: any) => {
                     const sessionAvailability = getAvailabilityForSession(session.id);
                     const isPastSession = parseISO(session.session_date) < new Date();
                     

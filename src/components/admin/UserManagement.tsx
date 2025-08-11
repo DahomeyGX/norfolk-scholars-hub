@@ -53,21 +53,14 @@ const UserManagement = () => {
       
       if (deleteError) throw deleteError;
       
-      // Add the new role (if not 'user', as 'user' is the default)
-      if (newRole !== 'user') {
-        const { error: insertError } = await supabase
-          .from('user_roles')
-          .insert({ user_id: userId, role: newRole });
-        
-        if (insertError) throw insertError;
-      } else {
-        // Add default user role
-        const { error: insertError } = await supabase
-          .from('user_roles')
-          .insert({ user_id: userId, role: 'user' });
-        
-        if (insertError) throw insertError;
-      }
+      // Add the new role using RPC call to handle type casting
+      const { error: insertError } = await supabase
+        .rpc('update_user_role', { 
+          target_user_id: userId, 
+          new_role: newRole 
+        });
+      
+      if (insertError) throw insertError;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['users'] });
@@ -80,10 +73,10 @@ const UserManagement = () => {
   });
 
   const getUserPrimaryRole = (roles: any[]) => {
-    if (roles.some(r => r.role === 'admin')) return 'admin';
-    if (roles.some(r => r.role === 'volunteer_math')) return 'volunteer_math';
-    if (roles.some(r => r.role === 'volunteer_ela')) return 'volunteer_ela';
-    if (roles.some(r => r.role === 'volunteer_adlo')) return 'volunteer_adlo';
+    if (roles.some((r: any) => r.role === 'admin')) return 'admin';
+    if (roles.some((r: any) => r.role === 'volunteer_math')) return 'volunteer_math';
+    if (roles.some((r: any) => r.role === 'volunteer_ela')) return 'volunteer_ela';
+    if (roles.some((r: any) => r.role === 'volunteer_adlo')) return 'volunteer_adlo';
     return 'user';
   };
 
@@ -125,17 +118,6 @@ const UserManagement = () => {
         return <Badge className={`${baseClasses} bg-gray-100 text-gray-800`}>
           {getRoleIcon(role)}User
         </Badge>;
-    }
-  };
-
-  const getRoleDisplayName = (role: string) => {
-    switch (role) {
-      case 'admin': return 'Administrator';
-      case 'volunteer_math': return 'Math Volunteer';
-      case 'volunteer_ela': return 'ELA Volunteer';
-      case 'volunteer_adlo': return 'ADLO Volunteer';
-      case 'user': return 'User';
-      default: return 'User';
     }
   };
 
