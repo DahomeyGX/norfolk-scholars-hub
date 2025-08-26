@@ -1,42 +1,40 @@
+
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Clock, Calendar, Calculator, Utensils, GamepadIcon, BookOpen } from "lucide-react";
 import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import MobileNavigation from "@/components/MobileNavigation";
+import { format, parseISO } from 'date-fns';
 
 const Schedule = () => {
   const location = useLocation();
   const [date, setDate] = useState<Date | undefined>(new Date());
 
-  // Session dates for 2025-2026
-  const sessionDates = [
-    new Date(2025, 9, 18), // October 18
-    new Date(2025, 9, 25), // October 25
-    new Date(2025, 10, 1), // November 1
-    new Date(2025, 10, 8), // November 8
-    new Date(2025, 10, 15), // November 15
-    new Date(2025, 10, 22), // November 22
-    new Date(2025, 10, 29), // November 29
-    new Date(2025, 11, 6), // December 6
-    new Date(2025, 11, 13), // December 13
-    new Date(2026, 0, 3), // January 3
-    new Date(2026, 0, 10), // January 10
-    new Date(2026, 0, 17), // January 17
-    new Date(2026, 0, 24), // January 24
-    new Date(2026, 0, 31), // January 31
-    new Date(2026, 1, 7), // February 7
-    new Date(2026, 1, 14), // February 14
-    new Date(2026, 1, 21), // February 21
-    new Date(2026, 1, 28), // February 28
-    new Date(2026, 2, 7), // March 7
-  ];
+  // Fetch sessions from database
+  const { data: sessions, isLoading } = useQuery({
+    queryKey: ['sessions'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('sessions')
+        .select('*')
+        .order('session_date', { ascending: true });
+      
+      if (error) throw error;
+      return data || [];
+    },
+  });
 
-  // No session dates
-  const noSessionDates = [
-    new Date(2025, 11, 20), // December 20
-    new Date(2025, 11, 27), // December 27
-  ];
+  // Convert sessions to calendar format
+  const sessionDates = sessions?.filter(session => session.is_active).map(session => 
+    new Date(session.session_date)
+  ) || [];
+
+  const noSessionDates = sessions?.filter(session => !session.is_active).map(session => 
+    new Date(session.session_date)
+  ) || [];
 
   // Function to check if a date is a session date
   const isSessionDate = (date: Date) => {
@@ -51,6 +49,9 @@ const Schedule = () => {
       noSessionDate.toDateString() === date.toDateString()
     );
   };
+
+  const firstSession = sessions?.find(session => session.is_active);
+  const lastSession = sessions?.filter(session => session.is_active).pop();
 
   return (
     <div className="min-h-screen bg-prep-white font-gill-sans">
@@ -160,7 +161,7 @@ const Schedule = () => {
                 <Calendar className="h-5 w-5 mr-3 text-pumpkin" />
                 <div>
                   <span className="font-semibold text-prep-burgundy font-gill-sans text-prep-subheading-gill">Season:</span>
-                  <span className="text-prep-dark-gray font-garamond text-prep-body-garamond ml-2">October to March</span>
+                  <span className="text-prep-dark-gray font-garamond text-prep-body-garamond ml-2">October 4th - March</span>
                 </div>
               </div>
               <div className="flex items-center">
@@ -197,7 +198,7 @@ const Schedule = () => {
               2025-2026 SESSION CALENDAR
             </CardTitle>
             <CardDescription className="text-prep-dark-gray font-garamond text-prep-body-garamond">
-              Program runs every Saturday from October to March, excluding winter break
+              Program runs every Saturday from October 4th to March, excluding winter break
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -246,7 +247,9 @@ const Schedule = () => {
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between">
                       <span className="font-garamond text-prep-body-garamond text-prep-dark-gray">First Session:</span>
-                      <span className="font-semibold font-garamond text-prep-body-garamond text-prep-burgundy">October 18, 2025</span>
+                      <span className="font-semibold font-garamond text-prep-body-garamond text-prep-burgundy">
+                        {firstSession ? format(parseISO(firstSession.session_date), 'MMMM d, yyyy') : 'October 4, 2025'}
+                      </span>
                     </div>
                     <div className="flex justify-between">
                       <span className="font-garamond text-prep-body-garamond text-prep-dark-gray">Winter Break:</span>
@@ -254,7 +257,9 @@ const Schedule = () => {
                     </div>
                     <div className="flex justify-between">
                       <span className="font-garamond text-prep-body-garamond text-prep-dark-gray">Last Session:</span>
-                      <span className="font-semibold font-garamond text-prep-body-garamond text-prep-burgundy">March 7, 2026</span>
+                      <span className="font-semibold font-garamond text-prep-body-garamond text-prep-burgundy">
+                        {lastSession ? format(parseISO(lastSession.session_date), 'MMMM d, yyyy') : 'March 7, 2026'}
+                      </span>
                     </div>
                   </div>
                 </div>
