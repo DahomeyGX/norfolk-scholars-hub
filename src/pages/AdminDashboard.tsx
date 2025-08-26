@@ -9,7 +9,8 @@ import { Badge } from '@/components/ui/badge';
 import ContactSubmissions from '@/components/admin/ContactSubmissions';
 import UserManagement from '@/components/admin/UserManagement';
 import SessionManagement from '@/components/admin/SessionManagement';
-import { Users, MessageSquare, Settings, LogOut, Calendar, CheckCircle, XCircle, HelpCircle } from 'lucide-react';
+import InviteManagement from '@/components/admin/InviteManagement';
+import { Users, MessageSquare, Settings, LogOut, Calendar, CheckCircle, XCircle, HelpCircle, Mail } from 'lucide-react';
 import { format, parseISO } from 'date-fns';
 
 const AdminDashboard = () => {
@@ -86,10 +87,11 @@ const AdminDashboard = () => {
 
       <div className="container mx-auto px-4 py-8">
         <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="grid w-full grid-cols-5">
+          <TabsList className="grid w-full grid-cols-6">
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="sessions">Sessions</TabsTrigger>
             <TabsTrigger value="volunteers">Volunteers</TabsTrigger>
+            <TabsTrigger value="invites">Invites</TabsTrigger>
             <TabsTrigger value="contacts">Contact Forms</TabsTrigger>
             <TabsTrigger value="users">User Management</TabsTrigger>
           </TabsList>
@@ -138,7 +140,7 @@ const AdminDashboard = () => {
                 <CardDescription>Common administrative tasks</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
                   <Button
                     onClick={() => setActiveTab('sessions')}
                     className="bg-prep-burgundy hover:bg-prep-burgundy/90 text-prep-white"
@@ -152,6 +154,13 @@ const AdminDashboard = () => {
                   >
                     <Users className="mr-2 h-4 w-4" />
                     View Volunteer Status
+                  </Button>
+                  <Button
+                    onClick={() => setActiveTab('invites')}
+                    className="bg-prep-burgundy hover:bg-prep-burgundy/90 text-prep-white"
+                  >
+                    <Mail className="mr-2 h-4 w-4" />
+                    Manage Invites
                   </Button>
                   <Button
                     onClick={() => setActiveTab('contacts')}
@@ -239,6 +248,10 @@ const AdminDashboard = () => {
                 </div>
               </CardContent>
             </Card>
+          </TabsContent>
+
+          <TabsContent value="invites">
+            <InviteManagement />
           </TabsContent>
 
           <TabsContent value="contacts">

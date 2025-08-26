@@ -14,6 +14,7 @@ import ApplyNow from "./pages/ApplyNow";
 import Auth from "./pages/Auth";
 import AdminDashboard from "./pages/AdminDashboard";
 import VolunteerDashboard from "./pages/VolunteerDashboard";
+import Invite from "./pages/Invite";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -32,6 +33,7 @@ const App = () => (
               <Route path="/apply" element={<ApplyNow />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/auth" element={<Auth />} />
+              <Route path="/invite/:inviteCode" element={<Invite />} />
               <Route 
                 path="/admin" 
                 element={

@@ -56,6 +56,42 @@ export type Database = {
         }
         Relationships: []
       }
+      invites: {
+        Row: {
+          created_at: string
+          created_by: string
+          email: string
+          expires_at: string
+          id: string
+          invite_code: string
+          role: Database["public"]["Enums"]["app_role"]
+          used_at: string | null
+          used_by: string | null
+        }
+        Insert: {
+          created_at?: string
+          created_by: string
+          email: string
+          expires_at?: string
+          id?: string
+          invite_code: string
+          role?: Database["public"]["Enums"]["app_role"]
+          used_at?: string | null
+          used_by?: string | null
+        }
+        Update: {
+          created_at?: string
+          created_by?: string
+          email?: string
+          expires_at?: string
+          id?: string
+          invite_code?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          used_at?: string | null
+          used_by?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string | null
@@ -146,6 +182,10 @@ export type Database = {
         Args: { ip_addr: string }
         Returns: boolean
       }
+      generate_invite_code: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -158,6 +198,10 @@ export type Database = {
           new_role: Database["public"]["Enums"]["app_role"]
           target_user_id: string
         }
+        Returns: undefined
+      }
+      use_invite: {
+        Args: { p_invite_code: string; p_user_id: string }
         Returns: undefined
       }
     }
