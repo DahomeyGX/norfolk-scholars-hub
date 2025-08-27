@@ -1,4 +1,5 @@
 
+
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useQuery } from '@tanstack/react-query';
@@ -56,6 +57,12 @@ const Schedule = () => {
 
   const firstSession = sessions?.find(session => session.is_active);
   const lastSession = sessions?.filter(session => session.is_active).pop();
+
+  // Helper function to create Date from session date string
+  const createDateFromSessionString = (dateString: string) => {
+    const parts = dateString.split('-').map(part => parseInt(part));
+    return new Date(parts[0], parts[1] - 1, parts[2]);
+  };
 
   return (
     <div className="min-h-screen bg-prep-white font-gill-sans">
@@ -252,7 +259,7 @@ const Schedule = () => {
                     <div className="flex justify-between">
                       <span className="font-garamond text-prep-body-garamond text-prep-dark-gray">First Session:</span>
                       <span className="font-semibold font-garamond text-prep-body-garamond text-prep-burgundy">
-                        {firstSession ? format(new Date(...firstSession.session_date.split('-').map((part, index) => index === 1 ? parseInt(part) - 1 : parseInt(part))), 'MMMM d, yyyy') : 'October 4, 2025'}
+                        {firstSession ? format(createDateFromSessionString(firstSession.session_date), 'MMMM d, yyyy') : 'October 4, 2025'}
                       </span>
                     </div>
                     <div className="flex justify-between">
@@ -262,7 +269,7 @@ const Schedule = () => {
                     <div className="flex justify-between">
                       <span className="font-garamond text-prep-body-garamond text-prep-dark-gray">Last Session:</span>
                       <span className="font-semibold font-garamond text-prep-body-garamond text-prep-burgundy">
-                        {lastSession ? format(new Date(...lastSession.session_date.split('-').map((part, index) => index === 1 ? parseInt(part) - 1 : parseInt(part))), 'MMMM d, yyyy') : 'March 7, 2026'}
+                        {lastSession ? format(createDateFromSessionString(lastSession.session_date), 'MMMM d, yyyy') : 'March 7, 2026'}
                       </span>
                     </div>
                   </div>
@@ -277,3 +284,4 @@ const Schedule = () => {
 };
 
 export default Schedule;
+
