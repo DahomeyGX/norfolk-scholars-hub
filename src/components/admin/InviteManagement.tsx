@@ -16,7 +16,7 @@ const InviteManagement = () => {
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const [email, setEmail] = useState('');
-  const [role, setRole] = useState('admin');
+  const [role, setRole] = useState<'admin' | 'volunteer_math' | 'volunteer_ela' | 'volunteer_adlo' | 'user'>('admin');
 
   // Fetch invites
   const { data: invites, isLoading } = useQuery({
@@ -46,7 +46,7 @@ const InviteManagement = () => {
         .from('invites')
         .insert({
           email,
-          role,
+          role: role as any, // Type assertion to handle the enum type
           invite_code: inviteCode,
           created_by: (await supabase.auth.getUser()).data.user?.id
         });
@@ -156,7 +156,7 @@ const InviteManagement = () => {
               
               <div>
                 <Label htmlFor="role">Role</Label>
-                <Select value={role} onValueChange={setRole}>
+                <Select value={role} onValueChange={(value) => setRole(value as typeof role)}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select role" />
                   </SelectTrigger>
