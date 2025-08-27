@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useQuery } from '@tanstack/react-query';
@@ -115,7 +116,7 @@ const Schedule = () => {
                 <Clock className="h-6 w-6 mr-3" />
                 DAILY SCHEDULE (SATURDAYS)
               </CardTitle>
-              <CardDescription className="text-prep-dark-gray font-garamond text-prep-body-garamond">
+              <CardDescription className="text-prep-dark-gray font-garamond text-prep-subheading-garamond">
                 Our structured Saturday program runs from 11:00 AM to 3:00 PM
               </CardDescription>
             </CardHeader>
@@ -251,7 +252,7 @@ const Schedule = () => {
                     <div className="flex justify-between">
                       <span className="font-garamond text-prep-body-garamond text-prep-dark-gray">First Session:</span>
                       <span className="font-semibold font-garamond text-prep-body-garamond text-prep-burgundy">
-                        {firstSession ? format(new Date(firstSession.session_date.split('-').map((part, index) => index === 1 ? parseInt(part) - 1 : parseInt(part))), 'MMMM d, yyyy') : 'October 4, 2025'}
+                        {firstSession ? format(new Date(...firstSession.session_date.split('-').map((part, index) => index === 1 ? parseInt(part) - 1 : parseInt(part))), 'MMMM d, yyyy') : 'October 4, 2025'}
                       </span>
                     </div>
                     <div className="flex justify-between">
@@ -261,7 +262,7 @@ const Schedule = () => {
                     <div className="flex justify-between">
                       <span className="font-garamond text-prep-body-garamond text-prep-dark-gray">Last Session:</span>
                       <span className="font-semibold font-garamond text-prep-body-garamond text-prep-burgundy">
-                        {lastSession ? format(new Date(lastSession.session_date.split('-').map((part, index) => index === 1 ? parseInt(part) - 1 : parseInt(part))), 'MMMM d, yyyy') : 'March 7, 2026'}
+                        {lastSession ? format(new Date(...lastSession.session_date.split('-').map((part, index) => index === 1 ? parseInt(part) - 1 : parseInt(part))), 'MMMM d, yyyy') : 'March 7, 2026'}
                       </span>
                     </div>
                   </div>
