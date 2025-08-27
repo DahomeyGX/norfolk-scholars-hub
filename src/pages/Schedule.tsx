@@ -7,7 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Clock, Calendar, Calculator, Utensils, GamepadIcon, BookOpen } from "lucide-react";
 import { Calendar as CalendarComponent } from "@/components/ui/calendar";
 import MobileNavigation from "@/components/MobileNavigation";
-import { format, parseISO } from 'date-fns';
+import { format } from 'date-fns';
 
 const Schedule = () => {
   const location = useLocation();
@@ -27,14 +27,18 @@ const Schedule = () => {
     },
   });
 
-  // Convert sessions to calendar format
-  const sessionDates = sessions?.filter(session => session.is_active).map(session => 
-    new Date(session.session_date)
-  ) || [];
+  // Convert sessions to calendar format - fix timezone issue by creating date from parts
+  const sessionDates = sessions?.filter(session => session.is_active).map(session => {
+    // Parse the date string manually to avoid timezone shifts
+    const dateParts = session.session_date.split('-');
+    return new Date(parseInt(dateParts[0]), parseInt(dateParts[1]) - 1, parseInt(dateParts[2]));
+  }) || [];
 
-  const noSessionDates = sessions?.filter(session => !session.is_active).map(session => 
-    new Date(session.session_date)
-  ) || [];
+  const noSessionDates = sessions?.filter(session => !session.is_active).map(session => {
+    // Parse the date string manually to avoid timezone shifts
+    const dateParts = session.session_date.split('-');
+    return new Date(parseInt(dateParts[0]), parseInt(dateParts[1]) - 1, parseInt(dateParts[2]));
+  }) || [];
 
   // Function to check if a date is a session date
   const isSessionDate = (date: Date) => {
@@ -248,7 +252,7 @@ const Schedule = () => {
                     <div className="flex justify-between">
                       <span className="font-garamond text-prep-body-garamond text-prep-dark-gray">First Session:</span>
                       <span className="font-semibold font-garamond text-prep-body-garamond text-prep-burgundy">
-                        {firstSession ? format(parseISO(firstSession.session_date), 'MMMM d, yyyy') : 'October 4, 2025'}
+                        {firstSession ? format(new Date(firstSession.session_date.split('-').map((part, index) => index === 1 ? parseInt(part) - 1 : parseInt(part))), 'MMMM d, yyyy') : 'October 4, 2025'}
                       </span>
                     </div>
                     <div className="flex justify-between">
@@ -258,7 +262,7 @@ const Schedule = () => {
                     <div className="flex justify-between">
                       <span className="font-garamond text-prep-body-garamond text-prep-dark-gray">Last Session:</span>
                       <span className="font-semibold font-garamond text-prep-body-garamond text-prep-burgundy">
-                        {lastSession ? format(parseISO(lastSession.session_date), 'MMMM d, yyyy') : 'March 7, 2026'}
+                        {lastSession ? format(new Date(lastSession.session_date.split('-').map((part, index) => index === 1 ? parseInt(part) - 1 : parseInt(part))), 'MMMM d, yyyy') : 'March 7, 2026'}
                       </span>
                     </div>
                   </div>
@@ -266,7 +270,7 @@ const Schedule = () => {
               </div>
             </div>
           </CardContent>
-        </Card>
+        </div>
       </div>
     </div>
   );
